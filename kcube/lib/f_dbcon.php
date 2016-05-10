@@ -15,8 +15,8 @@ $arr_db_proc_status = array();
 function set_dbcon( $transtart = false ){
 	global $dbcon;
 	$db_host = "localhost";
-	$db_id = "root";
-	$db_pwd = "apmsetup";
+	$db_id = "bacbe50c3b9d62";
+	$db_pwd = "fb668bb3";
 	$db_name = "dbjimmyrim";
 	$dbcon = mysql_connect($db_host, $db_id, $db_pwd)  or die("Could not connect");
 //	mysql_query("SET NAMES 'euckr'");
