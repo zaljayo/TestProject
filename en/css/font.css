@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+@font-face {
+	font-family: 'Noto Sans Korean';
+	font-weight: normal;
+	src: url("../fonts/NotoSansKR-Regular-Hestia.woff") format('woff'); /* Modern Browsers */
+}
+
+@font-face {
+	font-family: 'Noto Sans Korean';
+	font-weight: bold;
+	src: url("../fonts/NotoSansKR-Medium-Hestia.woff") format('woff'); /* Modern Browsers */
+}
+
+@font-face {
+	font-family: 'Noto Sans Light';
+	font-weight: normal;
+	src: url("../fonts/NotoSansKR-Light-Hestia.woff") format('woff'); /* Modern Browsers */
+}
+
+@font-face{
+	font-family:'Brandon';
+	font-weight:normal;
+	src:url("../fonts/Brandon_med.eot"); /* IE6~8 */
+	src: local(※), url("../fonts/Brandon_med.woff") format("woff"); /* Modern Browsers */
+}
+
+@font-face{
+	font-family:'Brandon';
+	font-weight:bold;
+	src:url("../fonts/Brandon_bld.eot"); /* IE6~8 */
+	src: local(※), url("../fonts/Brandon_bld.woff") format("woff"); /* Modern Browsers */
+}

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>FAMILY 목록 | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = 'family';
+
+/* 페이지 초기화 */
+$(document).ready(function(){
+	loadedIsotope(".js-grid")
+	$(".js-fam-list .item a").bind("mouseenter", famEnter);  //해상도 1280 일때, 마우스 엔터
+	$(".js-fam-list .item a").bind("mouseleave", famLeave);  //해상도 1280 일때, 마우스 리브
+	wiwResize1280(); //사용자 해상도 넓이 따른 기능 부여,제거
+	$(window).resize(function(){ wiwResize1280() }); //사용자 해상도 넓이 윈도우 리사이징
+});
+
+/* 함수 정의 */
+// 이미지 로드후 Isotope 실행
+function loadedIsotope(e){
+	//IE 9이하 리턴
+	if(navigator.appName.indexOf("Internet Explorer")!=-1){
+		var badBrowser=(
+			navigator.appVersion.indexOf("MSIE 10")==-1 &&   //v10 is ok
+			navigator.appVersion.indexOf("MSIE 1")==-1  //v11, 12, etc. is fine too
+		);
+
+		if(badBrowser){
+			// navigate to error page
+			return;
+		}
+	}
+
+	$(e).imagesLoaded( function() {
+		$( ".js-grid>.item:first-child" ).addClass("grid-sizer");
+		$(e).isotope({
+			itemSelector: '.js-grid>.item',
+			percentPosition: true, 
+			layoutMode: 'packery', //빈칸채우기
+			masonry: {
+				columnWidth: '.grid-sizer'
+			}
+		});
+	});
+}
+
+//해상도 1280 일때, 마우스 엔터
+var famEnter = function (){
+	$(this).find(".c-img>img").attr("src",$(this).find(".c-img>img").attr("src").replace("_off.jpg","_on.jpg"));
+	$(this).next(".hover-box").show();
+}
+
+//해상도 1280 일때, 마우스 리브
+var famLeave = function (){
+	$(this).find(".c-img>img").attr("src",$(this).find(".c-img>img").attr("src").replace("_on.jpg","_off.jpg"));
+	$(this).next(".hover-box").hide();
+}
+
+//사용자 해상도 넓이 따른 기능 부여,제거
+function wiwResize1280() {
+	pageWidth = 1280
+	var wiw = window.innerWidth;
+
+	if(wiw<pageWidth){
+		$(".js-fam-list .item a").unbind("mouseenter", famEnter)
+		$(".js-fam-list .item a").unbind("mouseleave", famLeave)
+		//$(".js-fam-list .item a").css({"cursor":"default"});
+	}else{
+		$(".js-fam-list .item a").bind("mouseenter", famEnter)
+		$(".js-fam-list .item a").bind("mouseleave", famLeave)
+		//$(".js-fam-list .item a").css({"cursor":"pointer"});
+	}
+}
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<? include "../inc/header.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents">
+			<h4 class="cont-title">K CUBE FAMILY 만의 특징</h4>
+			<div class="feature-list">
+				<ul>
+					<li>
+						<div class="c-img">
+							<img src="../images/family/fam_feature_1.png" alt="" />
+						</div>
+						<strong class="b-title">Best Member</strong>
+						<span class="txt">
+							특정 분야 문제를 푸는 데 있어 해당 분야 최고의 역량을 갖고 있는 팀.<br />
+							함께 있는 것만으로도 배움이 있는 동료들로 구성.
+						</span>
+					</li>
+					<li>
+						<div class="c-img">
+							<img src="../images/family/fam_feature_2.png" alt="" />
+						</div>
+						<strong class="b-title">Warm Heart</strong>
+						<span class="txt">
+							따뜻한 마음과 자율성을 갖고 일하며 결과적으로 좋은 성과를 내는 팀.
+						</span>
+					</li>
+					<li>
+						<div class="c-img">
+							<img src="../images/family/fam_feature_3.png" alt="" />
+						</div>
+						<strong class="b-title">Great Product</strong>
+						<span class="txt">
+							팀의 역량을 최대한으로 발휘해 이전에 볼 수 없었던 훌륭한 제품을 만드는 팀.
+						</span>
+					</li>
+					<li>
+						<div class="c-img">
+							<img src="../images/family/fam_feature_4.png" alt="" />
+						</div>
+						<strong class="b-title">Innovation</strong>
+						<span class="txt">
+							전체 패밀리의 일원으로서 다양한 혁신을 만들어 나가며 차원이 다른 성장을 실현.
+						</span>
+					</li>
+				</ul>
+			</div>
+
+			<h4 class="cont-title">K CUBE FAMILY 만의 소개</h4>
+			<div class="fam-grid-wrap">
+				<div class="fam-grid js-grid js-fam-list">
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo1_off.jpg" alt="" />
+							</div>
+						</a>
+						<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo2_off.jpg" alt="" />
+							</div>
+							<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo3_off.jpg" alt="" />
+							</div>
+							<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo4_off.jpg" alt="" />
+							</div>
+							<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo5_off.jpg" alt="" />
+							</div>
+						</a>
+						<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo6_off.jpg" alt="" />
+							</div>
+							<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo7_off.jpg" alt="" />
+							</div>
+							<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo8_off.jpg" alt="" />
+							</div>
+							<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo9_off.jpg" alt="" />
+							</div>
+						</a>
+						<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo10_off.jpg" alt="" />
+							</div>
+							<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo11_off.jpg" alt="" />
+							</div>
+							<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/family/fam_logo12_off.jpg" alt="" />
+							</div>
+							<div class="hover-box">
+							<strong class="name">WishLink</strong>
+							<span class="info">
+								개인화 알고리즘 기반 영화추천 서비스<br />
+								왓챠!를 서비스 중. KAIST, 서울대,<br />
+								포항공대 출신 핵심 엔지니어들 중심으로<br />
+								구성된 스타트업
+							</span>
+							<a href="#" class="btn-txt">Learn More</a>
+						</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="btn-area">
+				<a href="#" class="btn-blue-fixed">Learn More (4/9)</a>
+			</div>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

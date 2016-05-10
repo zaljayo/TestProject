@@ -1,0 +1,284 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+include $server_root_path."/lib/class/class_team.php";
+
+//-- 업로드 경로
+get_updir( "team" );
+
+$pageName = "team";
+
+
+
+//-- 리스트 가져오기
+$ilist_size = 9999;
+$sql_where = " and tm_status = 'Y'";
+
+$arr_sql = array(
+	"fild" => "tm_idx, tm_name, tm_name_eng, tm_pos, tm_pos_eng, tm_rnk, tm_rnk_eng, tm_list_img_pc, tm_list_img_mb",
+	"table" => "tb_team",
+	"where" => $sql_where,
+	"orderby" => "order by tm_seq asc, tm_idx desc"
+);
+$db_result = get_record( $arr_sql );
+$rs = $db_result[result];
+
+//-- DB 닫기
+set_db_close();
+
+
+//-- Location
+$MENU2_NAME = "TEAM";
+$MENU2_LINK = "";
+?>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>TEAM 목록 | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = 'team';
+
+/* 페이지 초기화 */
+$(document).ready(function(){
+	$(".js-team-list .pht-item a").bind("mouseenter", teamEnter);  //해상도 1280 일때, 마우스 엔터
+	$(".js-team-list .pht-item a").bind("mouseleave", teamLeave);  //해상도 1280 일때, 마우스 리브
+	wiwResize1280(); //사용자 해상도 넓이 따른 기능 부여,제거
+	$(window).resize(function(){ wiwResize1280() }); //사용자 해상도 넓이 윈도우 리사이징
+});
+
+/* 함수 정의 */
+//해상도 1280 일때, 마우스 엔터
+var teamEnter = function (){
+	$(this).find(".hover-box").show();
+}
+
+//해상도 1280 일때, 마우스 리브
+var teamLeave = function (){
+	$(this).find(".hover-box").hide();
+}
+
+//사용자 해상도 넓이 따른 기능 부여,제거
+function wiwResize1280() {
+	pageWidth = 1280;
+	var wiw = window.innerWidth;
+	if(wiw<pageWidth){
+		$(".js-team-list .pht-item a").unbind("mouseenter", teamEnter)
+		$(".js-team-list .pht-item a").unbind("mouseleave", teamLeave)
+		//$(".js-team-list .pht-item a").css({"cursor":"default"});
+	}else{
+		$(".js-team-list .pht-item a").bind("mouseenter", teamEnter)
+		$(".js-team-list .pht-item a").bind("mouseleave", teamLeave)
+		//$(".js-team-list .pht-item a").css({"cursor":"pointer"});
+	}
+}
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 일반 페이지 -->
+		<div class="page-title js-title">
+			<h3></h3>
+		</div>
+
+		<div class="lowmenu">
+			<!-- 메뉴 1개 -->
+			<span class="one-lowmenu">Heal the World, Make It a Better Place</span>
+			<!-- //메뉴 1개 -->
+		</div>
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+		<div id="contents">
+			<h4 class="cont-title">TEAM</h4>
+			<div class="cont-team js-team-list">
+				<div class="txt-item">
+					<div class="bg">
+						케이큐브벤처스는 기업가 분들을 진심으로<br />
+						<span class="block_after_inline">존경하며 기업가 분들이 최고의 성과를</span> 
+						 낼 수 있도록 지원하고 있습니다.<br /> 
+						<span class="block_after_inline">사회에 보다 의미 있는 일을 하기 위해</span> 
+						<span class="co-black">‘더 좋은 방법이 없을까?’</span>를 늘 고민하는<br />
+						<span class="co-black">케이큐브벤쳐스의 Best Team</span>을 소개합니다.
+					</div>
+				</div>
+				<div class="pht-item first">
+					<a href="#">
+						<img src="../images/team/pht_team_1.jpg" alt="" />
+						<div class="hover-box">
+							<div class="info">
+								<span>CEO</span>
+								<span class="bar">|</span>
+								<span>파트너</span>
+							</div>
+							<strong class="name">유승운</strong>
+							<span class="ico"><img src="../images/common/bu_hoverplus.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="pht-item">
+					<a href="#">
+						<img src="../images/team/pht_team_2.jpg" alt="" />
+						<div class="hover-box">
+							<div class="info">
+								<span>CEO</span>
+								<span class="bar">|</span>
+								<span>파트너</span>
+							</div>
+							<strong class="name">유승운</strong>
+							<span class="ico"><img src="../images/common/bu_hoverplus.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="pht-item">
+					<a href="#">
+						<img src="../images/team/pht_team_3.jpg" alt="" />
+						<div class="hover-box">
+							<div class="info">
+								<span>CEO</span>
+								<span class="bar">|</span>
+								<span>파트너</span>
+							</div>
+							<strong class="name">유승운</strong>
+							<span class="ico"><img src="../images/common/bu_hoverplus.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="pht-item">
+					<a href="#">
+						<img src="../images/team/pht_team_4.jpg" alt="" />
+						<div class="hover-box">
+							<div class="info">
+								<span>CEO</span>
+								<span class="bar">|</span>
+								<span>파트너</span>
+							</div>
+							<strong class="name">유승운</strong>
+							<span class="ico"><img src="../images/common/bu_hoverplus.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="pht-item hidden-upto-1280">
+					<span class="null"><img src="../images/team/pht_team_null.jpg" alt="" /></span>
+				</div>
+				<div class="pht-item">
+					<a href="#">
+						<img src="../images/team/pht_team_5.jpg" alt="" />
+						<div class="hover-box">
+							<div class="info">
+								<span>CEO</span>
+								<span class="bar">|</span>
+								<span>파트너</span>
+							</div>
+							<strong class="name">유승운</strong>
+							<span class="ico"><img src="../images/common/bu_hoverplus.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="pht-item">
+					<a href="#">
+						<img src="../images/team/pht_team_6.jpg" alt="" />
+						<div class="hover-box">
+							<div class="info">
+								<span>CEO</span>
+								<span class="bar">|</span>
+								<span>파트너</span>
+							</div>
+							<strong class="name">유승운</strong>
+							<span class="ico"><img src="../images/common/bu_hoverplus.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="pht-item">
+					<a href="#">
+						<img src="../images/team/pht_team_7.jpg" alt="" />
+						<div class="hover-box">
+							<div class="info">
+								<span>CEO</span>
+								<span class="bar">|</span>
+								<span>파트너</span>
+							</div>
+							<strong class="name">유승운</strong>
+							<span class="ico"><img src="../images/common/bu_hoverplus.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="pht-item">
+					<a href="#">
+						<img src="../images/team/pht_team_8.jpg" alt="" />
+						<div class="hover-box">
+							<div class="info">
+								<span>CEO</span>
+								<span class="bar">|</span>
+								<span>파트너</span>
+							</div>
+							<strong class="name">유승운</strong>
+							<span class="ico"><img src="../images/common/bu_hoverplus.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="pht-item hidden-upto-1280">
+					<span class="null"><img src="../images/team/pht_team_null.jpg" alt="" /></span>
+				</div>
+				<div class="pht-item hidden-upto-1280">
+					<span class="null"><img src="../images/team/pht_team_null.jpg" alt="" /></span>
+				</div>
+				<div class="pht-item">
+					<a href="#">
+						<img src="../images/team/pht_team_9.jpg" alt="" />
+						<div class="hover-box">
+							<div class="info">
+								<span>CEO</span>
+								<span class="bar">|</span>
+								<span>파트너</span>
+							</div>
+							<strong class="name">유승운</strong>
+							<span class="ico"><img src="../images/common/bu_hoverplus.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="pht-item">
+					<a href="#">
+						<img src="../images/team/pht_team_10.jpg" alt="" />
+						<div class="hover-box">
+							<div class="info">
+								<span>CEO</span>
+								<span class="bar">|</span>
+								<span>파트너</span>
+							</div>
+							<strong class="name">유승운</strong>
+							<span class="ico"><img src="../images/common/bu_hoverplus.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

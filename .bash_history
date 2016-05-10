@@ -1,0 +1,238 @@
+#1337762455
+ls
+#1337762464
+cd wp-content/
+#1337762465
+ls
+#1337762470
+cd themes/
+#1337762471
+ls
+#1337762472
+cd kcube/
+#1337762472
+ls
+#1337762473
+vi home.php
+#1337763298
+cd ..
+#1337763298
+ls
+#1337763300
+cd kcube/
+#1337763300
+ls
+#1337763302
+vi archive.php
+#1337763305
+ls
+#1337763307
+ls -al
+#1337763309
+rm .archive.php.swp 
+#1337763310
+ls
+#1337763315
+cp archive.php archive.php.bck2
+#1337763316
+vi archive.php
+#1337763433
+vi archive.php
+#1337763440
+vi loop.php 
+#1337763673
+cd style
+#1337763674
+lss
+#1337763676
+cd styles
+#1337763677
+ls
+#1337763679
+vi layout.css 
+#1337763688
+vi content
+#1337763690
+vi content.css 
+#1337764330
+exit
+#1337820960
+ls
+#1337831858
+ll
+#1337831866
+vi index.php 
+#1337831876
+ls -al
+#1337832077
+lsv-aql
+#1337832079
+ls -al
+#1337832091
+vi htaccess
+#1337831012
+ls
+#1337831015
+cd wp-content/
+#1337831016
+ls
+#1337831020
+vi themes/
+#1337831023
+cd themes/
+#1337831024
+ls
+#1337831025
+cd kcube/
+#1337831026
+ls
+#1337831030
+vi archive.php
+#1337831080
+ls
+#1337831083
+vi loop.php 
+#1337831218
+ls
+#1337831221
+cd header.php 
+#1337831223
+vi header.php 
+#1337831253
+ls
+#1337831353
+ls
+#1337831109
+ls
+#1337831110
+cd www
+#1337831111
+cd wp-con
+#1337831113
+cd wp-content/
+#1337831113
+ls
+#1337831116
+cd themes/
+#1337831118
+cd kcube/
+#1337831119
+ls
+#1337831141
+cd styles
+#1337831142
+ls
+#1337831145
+vi content
+#1337831148
+vi content.css 
+#1337831481
+cd
+#1337831481
+ls
+#1337831482
+ls -al
+#1337831956
+ls
+#1337831964
+ls -l
+#1337831991
+ls
+#1337832000
+vi .htaccess
+#1337832024
+vi .htaccess
+#1338352782
+ls
+#1338352788
+cd wp-content/
+#1338352789
+ls
+#1338352792
+vi themes/
+#1338352794
+ls
+#1338352795
+cd themes/
+#1338352795
+ls
+#1338352797
+cd kcube/
+#1338352798
+ls
+#1338352800
+vi header.php 
+#1338353283
+exit
+#1338573795
+ls
+#1338573796
+cd www
+#1338573800
+cd wp-content/
+#1338573800
+ls
+#1338573802
+cd themes/
+#1338573802
+l
+#1338573803
+ls
+#1338573805
+cd kcube/
+#1338573805
+l
+#1338573806
+ls
+#1338573809
+cd styles
+#1338573810
+ls
+#1338573825
+vi style.php 
+#1338573873
+vi content.css 
+#1338573902
+ls
+#1338573913
+vi layout.css 
+#1338573918
+vi content
+#1338573921
+vi content.css
+#1338573931
+vi sidebar
+#1338573935
+vi base.css 
+#1338573943
+vi content-comments.css 
+#1338573947
+vi required.css 
+#1338574047
+vi required.css 
+#1338576728
+exit
+#1388654730
+LL
+#1388654731
+ll
+#1388654738
+cd wp-content/
+#1388654739
+ll
+#1388654746
+cd upload/
+#1388654746
+ll
+#1388654750
+cd ..
+#1388654750
+ll
+#1388654856
+cd ..
+#1388654857
+ll
+#1388654858
+ll -al
+#1388656814
+exit

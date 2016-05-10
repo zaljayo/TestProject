@@ -1,0 +1,392 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+include $server_root_path."/lib/class/class_ins_news.php";
+
+
+//-- 업로드 경로
+get_updir( "ins_news" );
+
+
+$pageName = "search";
+
+
+//-- DB 연결
+set_dbcon();
+
+$ser_fk_inw_mct_cate = setnull($ser_fk_inw_mct_cate, "NW");
+//echo $ser_fk_inw_mct_cate;
+
+//-- Location
+$MENU2_NAME = "TAG SEARCH";
+$MENU2_LINK = "";
+?>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>SEARCH | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = '<?= $pageName ?>';
+
+/* 페이징 초기 변수 */
+v_page = 1;
+v_list_size = 28;
+//v_list_size = 1;
+v_tmp_page = v_page;
+v_def_list_size = v_list_size;
+
+var v_ser_fk_inw_mct_cate = "<?= $ser_fk_inw_mct_cate ?>";
+var v_ser_fk_inw_mct_idx = "";
+var v_search_yn  = false;
+
+function get_more(){
+	v_page++;
+	v_search_yn = false;
+	get_page_list();
+}
+function get_ins_news_cate_search( val ){
+	v_ser_fk_inw_mct_cate = val;
+
+	hashClear();
+	v_page = 1;
+	$('#div_list_IS_YESDATA .item').remove();
+	$('#div_list_NW_YESDATA .item').remove();
+
+	if(val == "IS"){
+		$("#tab_IS").addClass("active");
+		$("#tab_NW").removeClass("active");
+	}else{
+		$("#tab_IS").removeClass("active");
+		$("#tab_NW").addClass("active");
+	}
+	v_search_yn = true;
+	get_page_list();
+}
+
+function get_page_view( v_inw_idx ){
+	setHash( "&ser_fk_inw_mct_cate="+ v_ser_fk_inw_mct_cate );
+	if(v_ser_fk_inw_mct_cate == "IS"){
+		location.href = "/insight/insight_view.html?inw_idx="+ v_inw_idx +"&ser_fk_inw_mct_cate=IS";
+	}else{
+		location.href = "/news/news_view.html?inw_idx=" + v_inw_idx +"&ser_fk_inw_mct_cate=NW";
+	}
+}
+
+function get_page_list(){
+	var v_param = "page="+ v_page +"&list_size="+ v_list_size +"&ser_fk_inw_mct_cate="+ v_ser_fk_inw_mct_cate +"&ser_fk_inw_mct_idx="+ v_ser_fk_inw_mct_idx +"&fild=tag&search_title="+ encodeURIComponent("<?= $search_title ?>");
+//	console.log(v_param)
+
+	if(v_ser_fk_inw_mct_cate == "IS"){
+		$("#div_tab_IS_data").show();
+		$("#div_tab_NW_data").hide();
+
+		$("#div_list_IS_YESDATA").show();
+		$("#div_tab_IS_data").addClass("active");
+		$("#div_tab_NW_data").removeClass("active");
+
+		$("#tab_IS").addClass("active");
+		$("#tab_NW").removeClass("active");
+
+	}else if(v_ser_fk_inw_mct_cate == "NW"){
+		$("#div_tab_IS_data").hide();
+		$("#div_tab_NW_data").show();
+
+		$("#div_list_NW_YESDATA").show();
+		$("#div_tab_IS_data").removeClass("active");
+		$("#div_tab_NW_data").addClass("active");
+
+		$("#tab_IS").removeClass("active");
+		$("#tab_NW").addClass("active");
+	}
+
+	var v_html = "";
+	$.ajax({
+		type:"get" ,
+		url:"/lib_ajax/get_ins_news.php",
+		data:v_param ,
+		success:function(data){
+			var json = JSON.parse(data);
+			var v_recordcount = json.recordcount;
+//			console.log(json)
+//			console.log(json.sql_list)
+//			console.log(json.result)
+
+			if(v_recordcount == 0 || json.result == null){
+				v_page--;
+				if(v_search_yn){
+					$("#div_list_"+ v_ser_fk_inw_mct_cate +"_NODATA").show();
+				}else{
+					alert("검색된 데이타가 없습니다.");
+					v_search_yn = false;
+				}
+			}else{
+				var v_grid_sizer = "";
+				for(var i=0; i<json.result.length; i++){
+					db_inw_idx				= json.result[i].inw_idx;
+					db_inw_wname			= json.result[i].inw_wname;
+					db_inw_title			= json.result[i].inw_title;
+					db_fk_inw_mct_cate		= json.result[i].fk_inw_mct_cate;
+					db_fk_inw_mct_idx		= json.result[i].fk_inw_mct_idx;
+					db_inw_tag				= json.result[i].inw_tag;
+					db_inw_img_list			= json.result[i].inw_img_list;
+					db_inw_img_list_desc	= json.result[i].inw_img_list_desc;
+					db_inw_ins_datetime		= json.result[i].inw_ins_datetime;
+
+					
+					if(v_page == 1 && i == 0){
+						v_grid_sizer = "grid-sizer";
+					}else{
+						v_grid_sizer = "";
+					}
+					
+					v_link = "javascript:get_page_view("+ db_inw_idx +");"
+
+					if(v_ser_fk_inw_mct_cate == "IS"){
+						v_html += "<div class='item "+ v_grid_sizer +"'>";
+						v_html += "	<a href='"+ v_link +"'>";
+						v_html += "		<div class='c-img'>";
+						v_html += "			<span class='r-img'>";
+						v_html += "				<img src='<?= $GLB_UP_FILE_URL ?>"+ db_inw_img_list +"' alt='"+ db_inw_title +"' />";
+						v_html += "				<span class='writer'>"+ db_inw_wname +"</span>";
+						v_html += "			</span>";
+						v_html += "		</div>";
+						v_html += "		<div class='info'>";
+						v_html += "			<span class='b-date'>"+ get_eng_date(db_inw_ins_datetime) +"</span>";
+						v_html += "			<strong class='bb-title'>"+ db_inw_title +"</strong>";
+						v_html += "			<span class='b-txt'>"+ db_inw_img_list_desc +"</span>";
+						v_html += "		</div>";
+						v_html += "	</a>";
+						v_html += "	<div class='tags'>";
+						v_html += "		<strong class='title'>Tag</strong>";
+						v_html += "		"+ get_tag_search_make(db_inw_tag);
+						v_html += "	</div>";
+						v_html += "</div>";
+
+					}else if(v_ser_fk_inw_mct_cate == "NW"){
+						v_html += "<div class='item "+ v_grid_sizer +"'>";
+						v_html += "	<a href='"+ v_link +"'>";
+						v_html += "		<div class='c-img'>";
+						v_html += "			<img src='<?= $GLB_UP_FILE_URL ?>"+ db_inw_img_list +"' alt='"+ db_inw_title +"' />";
+						v_html += "		</div>";
+						v_html += "		<div class='info'>";
+						v_html += "			<span class='b-date'>"+ get_eng_date(db_inw_ins_datetime) +"</span>";
+						v_html += "			<strong class='b-title'>"+ db_inw_title +"</strong>";
+						v_html += "		</div>";
+						v_html += "	</a>";
+						v_html += "	<div class='tags'>";
+						v_html += "		<strong class='title'>Tag</strong>";
+						v_html += "		"+ get_tag_search_make(db_inw_tag);
+						v_html += "	</div>";
+						v_html += "</div>";
+					}
+				}
+
+				var $items = $(v_html);
+				$('#div_list_'+ v_ser_fk_inw_mct_cate).imagesLoaded( function() {
+					$('#div_list_'+ v_ser_fk_inw_mct_cate).append( $items ).isotope( 'appended', $items ).isotope('layout');
+				});
+				hashClear();
+				
+				var view_cnt = v_page * v_list_size;
+				if(view_cnt > v_recordcount){
+					view_cnt = v_recordcount;
+				}
+				$("#a_list_more_"+ v_ser_fk_inw_mct_cate).text("Learn More ("+ view_cnt +"/"+ v_recordcount +")");
+			}
+		},
+		error:function(){
+			v_page--;
+			alert( "처리도중 오류가 발생하였습니다." );
+		}
+	});
+}
+
+
+var first_fn = function(){
+	loadedIsotope(".js-grid")
+};
+
+$(document).ready(function(){
+
+
+	var v_param = "cmd=count&ser_fk_inw_mct_cate=NW&fild=tag&search_title="+ encodeURIComponent("<?= $search_title ?>");
+//	console.log(v_param)
+	$.ajax({
+		type:"get" ,
+		url:"/lib_ajax/get_ins_news.php",
+		data:v_param ,
+		success:function(v_recordcount){
+			$("#NW_cnt").text("NEWS ("+ v_recordcount +")");
+		},
+		error:function(){
+		}
+	});
+
+	var v_param = "cmd=count&ser_fk_inw_mct_cate=IS&fild=tag&search_title="+ encodeURIComponent("<?= $search_title ?>");
+//	console.log(v_param)
+	$.ajax({
+		type:"get" ,
+		url:"/lib_ajax/get_ins_news.php",
+		data:v_param ,
+		success:function(v_recordcount){
+			$("#IS_cnt").text("INSIGHT ("+ v_recordcount +")");
+		},
+		error:function(){
+		}
+	});
+
+
+
+
+	var json = checkForHash();
+//	console.log(json)
+	v_ser_fk_inw_mct_cate = json.ser_fk_inw_mct_cate;
+	if(v_ser_fk_inw_mct_cate == undefined){
+		v_ser_fk_inw_mct_cate = "NW";
+	}
+
+	var tmp_page = <?= $ipage ?>;
+	if(tmp_page != 1){
+		v_page = 1;
+		v_list_size = tmp_page * v_def_list_size;
+		v_tmp_page = tmp_page;
+		setHash("&ser_fk_inw_mct_cate="+ v_ser_fk_inw_mct_cate);
+	}
+
+
+	v_search_yn = true;
+	get_page_list();
+	first_fn();
+});
+
+
+
+/* 함수 정의 */
+// 이미지 로드후 Isotope 실행
+function loadedIsotope(e){
+	//IE 9이하 리턴
+	if(navigator.appName.indexOf("Internet Explorer")!=-1){
+		var badBrowser=(
+			navigator.appVersion.indexOf("MSIE 10")==-1 &&   //v10 is ok
+			navigator.appVersion.indexOf("MSIE 1")==-1  //v11, 12, etc. is fine too
+		);
+
+		if(badBrowser){
+			// navigate to error page
+			return;
+		}
+	}
+
+	$(e).imagesLoaded( function() {
+		$( ".js-grid>.item:first-child" ).addClass("grid-sizer");
+		$(e).isotope({
+			itemSelector: '.js-grid>.item',
+			percentPosition: true, 
+			layoutMode: 'packery', //빈칸채우기
+			masonry: {
+				columnWidth: '.grid-sizer'
+			}
+		});
+	});
+}
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 태그 페이지 -->
+		<div class="tag-search">
+			<span class="block_after_inline">TAG ARCHIVES :</span>
+			<span><?= stripslashes($search_title) ?></span>
+		</div>
+		<!-- //태그 페이지 -->
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents">
+			<div class="cont-search">
+				<ul class="tab-nav tab-tag" id="tab-srch">
+					<li class="active" id="tab_NW"><a href="javascript:get_ins_news_cate_search('NW');" id="NW_cnt">NEWS (0)</a></li>
+					<li id="tab_IS"><a href="javascript:get_ins_news_cate_search('IS');"id="IS_cnt">INSIGHT (0)</a></li>
+				</ul>
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="div_tab_IS_data">
+
+						<div class="null-box" style="display: none;" id="div_list_IS_NODATA">
+							<span class="ico"><i class="fa fa-search"></i></span>
+							<strong class="title">검색 결과가 없습니다.</strong>
+							<ul class="info-list">
+								<li>검색어가 정확하게 입력되었는지 확인해 보세요.</li>
+								<li>띄어쓰기를 확인해 보세요.</li>
+								<li>다른 단어로 검색해 보세요.</li>
+							</ul>
+						</div>
+
+						<div class="insight-wrap" id="div_list_IS_YESDATA">
+							<div class="insight-grid js-grid" id="div_list_IS">
+								<!-- insight 리스트 컨텐츠 //-->
+							</div>
+							<div class="btn-area">
+								<a href="javascript:get_more();" class="btn-blue-fixed" id="a_list_more_IS">Learn More (0/0)</a>
+							</div>
+						</div>
+					</div>
+
+					
+					
+					<div class="tab-pane" id="div_tab_NW_data">
+						<div class="null-box" style="display: none;" id="div_list_NW_NODATA">
+							<span class="ico"><i class="fa fa-search"></i></span>
+							<strong class="title">검색 결과가 없습니다.</strong>
+							<ul class="info-list">
+								<li>검색어가 정확하게 입력되었는지 확인해 보세요.</li>
+								<li>띄어쓰기를 확인해 보세요.</li>
+								<li>다른 단어로 검색해 보세요.</li>
+							</ul>
+						</div>
+
+						<div class="news-wrap" id="div_list_NW_YESDATA">
+							<div class="news-grid js-grid" id="div_list_NW">
+								<!-- news 리스트 컨텐츠 //-->
+							</div>
+							<div class="btn-area">
+								<a href="javascript:get_more();" class="btn-blue-fixed" id="a_list_more_NW">Learn More (0/0)</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

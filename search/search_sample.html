@@ -1,0 +1,534 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+include $server_root_path."/lib/class/class_ins_news.php";
+
+
+//-- DB 연결
+set_dbcon();
+
+
+
+//-- Location
+$MENU2_NAME = "SEARCH";
+$MENU2_LINK = "";
+?>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>SEARCH | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = 'search';
+
+/* 페이지 초기화 */
+$(document).ready(function(){
+	loadedIsotope(".fam-grid") //이미지 로드후 Isotope 실행
+	$("#tab-srch a").bind("click", tabAfter); //탭 실행후 이벤트
+});
+
+/* 함수 정의 */
+// 이미지 로드후 Isotope 실행
+function loadedIsotope(e){
+	//IE 9이하 리턴
+	if(navigator.appName.indexOf("Internet Explorer")!=-1){
+		var badBrowser=(
+			navigator.appVersion.indexOf("MSIE 10")==-1 &&   //v10 is ok
+			navigator.appVersion.indexOf("MSIE 1")==-1  //v11, 12, etc. is fine too
+		);
+
+		if(badBrowser){
+			// navigate to error page
+			return;
+		}
+	}
+
+	$(e).imagesLoaded( function() {
+		$( ".fam-grid>.item:first-child" ).addClass("grid-sizer");
+		$(e).isotope({
+			itemSelector: '.fam-grid>.item',
+			percentPosition: true, 
+			layoutMode: 'packery', //빈칸채우기
+			masonry: {
+				columnWidth: '.grid-sizer'
+			}
+		});
+	});
+}
+
+// 이미지 로드후 Isotope 실행
+function loadedIsotope2(e){
+	//IE 9이하 리턴
+	if(navigator.appName.indexOf("Internet Explorer")!=-1){
+		var badBrowser=(
+			navigator.appVersion.indexOf("MSIE 10")==-1 &&   //v10 is ok
+			navigator.appVersion.indexOf("MSIE 1")==-1  //v11, 12, etc. is fine too
+		);
+
+		if(badBrowser){
+			// navigate to error page
+			return;
+		}
+	}
+
+	$(e).imagesLoaded( function() {
+		$( ".insight-grid>.item:first-child" ).addClass("grid-sizer");
+		$(e).isotope({
+			itemSelector: '.insight-grid>.item',
+			percentPosition: true, 
+			layoutMode: 'packery', //빈칸채우기
+			masonry: {
+				columnWidth: '.grid-sizer'
+			}
+		});
+	});
+}
+
+// 이미지 로드후 Isotope 실행
+function loadedIsotope3(e){
+	//IE 9이하 리턴
+	if(navigator.appName.indexOf("Internet Explorer")!=-1){
+		var badBrowser=(
+			navigator.appVersion.indexOf("MSIE 10")==-1 &&   //v10 is ok
+			navigator.appVersion.indexOf("MSIE 1")==-1  //v11, 12, etc. is fine too
+		);
+
+		if(badBrowser){
+			// navigate to error page
+			return;
+		}
+	}
+
+	$(e).imagesLoaded( function() {
+		$( ".news-grid>.item:first-child" ).addClass("grid-sizer");
+		$(e).isotope({
+			itemSelector: '.news-grid>.item',
+			percentPosition: true, 
+			layoutMode: 'packery', //빈칸채우기
+			masonry: {
+				columnWidth: '.grid-sizer'
+			}
+		});
+	});
+}
+
+// 탭후 이벤트
+function tabAfter(){
+	$(this).on('shown.bs.tab', function () {
+		//인덱스값 가져오기
+		var $idx = $(this).parent("li").index();
+
+		if($idx == 0){
+			loadedIsotope(".fam-grid") //이미지 로드후 Isotope 실행
+		}else if ($idx == 1){
+			loadedIsotope2(".insight-grid") //이미지 로드후 Isotope 실행
+		}else if ($idx == 2){
+			loadedIsotope3(".news-grid") //이미지 로드후 Isotope 실행
+		}
+	})
+}
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 검색 페이지 -->
+		<div class="srch-search">
+			<label for="lb-srch-search" class="lb-srch">SEARCH</label>
+			<input type="text" name="lb-srch-search" id="lb-srch-search" class="inp-srch" />
+			<a href="#" class="btn-srch"><i class="fa fa-search"></i></a>
+		</div>
+		<!-- //검색 페이지 -->
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents">
+			<div class="cont-search">
+				<ul class="tab-nav" id="tab-srch">
+					<li class="active"><a href="#family" data-toggle="tab">FAMILY (5)</a></li>
+					<li><a href="#insight"data-toggle="tab">INSIGHT (9)</a></li>
+					<li><a href="#news" data-toggle="tab">NEWS (2)</a></li>
+				</ul>
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="family">
+						<!-- 검색결과 없을 때
+						<div class="null-box">
+							<span class="ico"><i class="fa fa-search"></i></span>
+							<strong class="title">검색 결과가 없습니다.</strong>
+							<ul class="info-list">
+								<li>검색어가 정확하게 입력되었는지 확인해 보세요.</li>
+								<li>띄어쓰기를 확인해 보세요.</li>
+								<li>다른 단어로 검색해 보세요.</li>
+							</ul>
+						</div>
+						<!-- 검색결과 없을 때 -->
+						<!-- 검색결과 있을 때 -->
+						<div class="fam-wrap">
+							<div class="fam-grid js-grid">
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<img src="../images/family/fam_logo1_off.jpg" alt="" />
+										</div>
+									</a>
+									<div class="hover-box">
+										<strong class="name">WishLink</strong>
+										<span class="info">
+											개인화 알고리즘 기반 영화추천 서비스<br />
+											왓챠!를 서비스 중. KAIST, 서울대,<br />
+											포항공대 출신 핵심 엔지니어들 중심으로<br />
+											구성된 스타트업
+										</span>
+										<a href="#" class="btn-txt">Learn More</a>
+									</div>
+								</div>
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<img src="../images/family/fam_logo2_off.jpg" alt="" />
+										</div>
+										<div class="hover-box">
+										<strong class="name">WishLink</strong>
+										<span class="info">
+											개인화 알고리즘 기반 영화추천 서비스<br />
+											왓챠!를 서비스 중. KAIST, 서울대,<br />
+											포항공대 출신 핵심 엔지니어들 중심으로<br />
+											구성된 스타트업
+										</span>
+										<a href="#" class="btn-txt">Learn More</a>
+									</div>
+									</a>
+								</div>
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<img src="../images/family/fam_logo3_off.jpg" alt="" />
+										</div>
+										<div class="hover-box">
+										<strong class="name">WishLink</strong>
+										<span class="info">
+											개인화 알고리즘 기반 영화추천 서비스<br />
+											왓챠!를 서비스 중. KAIST, 서울대,<br />
+											포항공대 출신 핵심 엔지니어들 중심으로<br />
+											구성된 스타트업
+										</span>
+										<a href="#" class="btn-txt">Learn More</a>
+									</div>
+									</a>
+								</div>
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<img src="../images/family/fam_logo4_off.jpg" alt="" />
+										</div>
+										<div class="hover-box">
+										<strong class="name">WishLink</strong>
+										<span class="info">
+											개인화 알고리즘 기반 영화추천 서비스<br />
+											왓챠!를 서비스 중. KAIST, 서울대,<br />
+											포항공대 출신 핵심 엔지니어들 중심으로<br />
+											구성된 스타트업
+										</span>
+										<a href="#" class="btn-txt">Learn More</a>
+									</div>
+									</a>
+								</div>
+								
+							</div>
+							<div class="btn-area">
+								<a href="#" class="btn-blue-fixed">Learn More (4/9)</a>
+							</div>
+						</div>
+						<!-- 검색결과 있을 때 -->
+					</div>
+					<div class="tab-pane" id="insight">
+						<!-- 검색결과 없을 때
+						<div class="null-box">
+							<span class="ico"><i class="fa fa-search"></i></span>
+							<strong class="title">검색 결과가 없습니다.</strong>
+							<ul class="info-list">
+								<li>검색어가 정확하게 입력되었는지 확인해 보세요.</li>
+								<li>띄어쓰기를 확인해 보세요.</li>
+								<li>다른 단어로 검색해 보세요.</li>
+							</ul>
+						</div>
+						<!-- //검색결과 없을 때 -->
+						<!-- 검색결과 있을 때 -->
+						<div class="insight-wrap">
+							<div class="insight-grid js-grid">
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<span class="r-img">
+												<img src="../images/insight/thum_insightlist_1.jpg" alt="" />
+												<span class="writer">임지훈</span>
+											</span>
+										</div>
+										<div class="info">
+											<span class="b-date">
+												December 21, 2015
+											</span>
+											<strong class="bb-title">
+												소프트웨어 투자에 최적화된 드림팀(Dream Team) 소프트웨어 투자에 최적화된 드림팀 (Dream Team)소프트웨어 투자에 최적화된 드림팀(Dream Team) 
+											</strong>
+											<span class="b-txt">
+												요즘 참 좋습니다. 회사에 좋은 일들도 많고요. 그런데 무엇보다 가장 좋은 것은, 토의(discussion)를 할 때마다 의미 있는 얘기를 나눌 수 있는 투자팀이 있다는 것입니다.
+											</span>
+										</div>
+									</a>
+									<div class="tags">
+										<strong class="title">Tag</strong>
+										<a href="#">왓챠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">케이큐브</a>
+										<a href="#">왓챠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">케이큐브</a>
+									</div>
+								</div>
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<span class="r-img">
+												<img src="../images/insight/thum_insightlist_1.jpg" alt="" />
+												<span class="writer">임지훈</span>
+											</span>
+										</div>
+										<div class="info">
+											<span class="b-date">
+												December 21, 2015
+											</span>
+											<strong class="bb-title">
+												소프트웨어 투자에 최적화된 드림팀
+											</strong>
+											<span class="b-txt">
+												요즘 참 좋습니다. 회사에 좋은 일들도 많고요. 요즘 참 좋습니다. 회사에 좋은 일들도 많고요. 요즘 참 좋습니다. 회사에 좋은 일들도 많고요. 요즘 참 좋습니다. 회사에 좋은 일들도 많고요. 
+											</span>
+										</div>
+									</a>
+									<div class="tags">
+										<strong class="title">Tag</strong>
+										<a href="#">왓챠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>
+									</div>
+								</div>
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<span class="r-img">
+												<img src="../images/insight/thum_insightlist_1.jpg" alt="" />
+												<span class="writer">임지훈</span>
+											</span>
+										</div>
+										<div class="info">
+											<span class="b-date">
+												December 21, 2015
+											</span>
+											<strong class="bb-title">
+												소프트웨어 투자에 최적화된 드림팀(Dream Team) 소프트웨어 투자에 최적화된 드림팀 (Dream Team)소프트웨어 투자에 최적화된 드림팀(Dream Team) 
+											</strong>
+											<span class="b-txt">
+												요즘 참 좋습니다. 회사에 좋은 일들도 많고요. 그런데 무엇보다 가장 좋은 것은, 토의(discussion)를 할 때마다 의미 있는 얘기를 나눌 수 있는 투자팀이 있다는 것입니다.
+											</span>
+										</div>
+									</a>
+									<div class="tags">
+										<strong class="title">Tag</strong>
+										<a href="#">왓챠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">케이큐브</a>
+										<a href="#">왓챠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">케이큐브</a>
+									</div>
+								</div>
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<span class="r-img">
+												<img src="../images/insight/thum_insightlist_1.jpg" alt="" />
+												<span class="writer">임지훈</span>
+											</span>
+										</div>
+										<div class="info">
+											<span class="b-date">
+												December 21, 2015
+											</span>
+											<strong class="bb-title">
+												소프트웨어 투자에 최적화된 드림팀
+											</strong>
+											<span class="b-txt">
+												요즘 참 좋습니다. 회사에 좋은 일들도 많고요. 요즘 참 좋습니다. 회사에 좋은 일들도 많고요. 요즘 참 좋습니다. 회사에 좋은 일들도 많고요. 요즘 참 좋습니다. 회사에 좋은 일들도 많고요. 
+											</span>
+										</div>
+									</a>
+									<div class="tags">
+										<strong class="title">Tag</strong>
+										<a href="#">왓챠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>
+									</div>
+								</div>
+							</div>
+							<div class="btn-area">
+								<a href="#" class="btn-blue-fixed">Learn More (4/9)</a>
+							</div>
+						</div>
+						<!-- //검색결과 있을 때 -->
+					</div>
+					<div class="tab-pane" id="news">
+						<!-- 검색결과 없을 때
+						<div class="null-box">
+							<span class="ico"><i class="fa fa-search"></i></span>
+							<strong class="title">검색 결과가 없습니다.</strong>
+							<ul class="info-list">
+								<li>검색어가 정확하게 입력되었는지 확인해 보세요.</li>
+								<li>띄어쓰기를 확인해 보세요.</li>
+								<li>다른 단어로 검색해 보세요.</li>
+							</ul>
+						</div>
+						<!-- //검색결과 없을 때 -->
+						<!-- 검색결과 있을 때 -->
+						<div class="news-wrap">
+							<div class="news-grid js-grid">
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<img src="../images/news/thum_newslist_1.jpg" alt="" />
+										</div>
+										<div class="info">
+											<span class="b-date">
+												December 21, 2015
+											</span>
+											<strong class="b-title">
+												소프트웨어 투자에 최적화된 드림팀(Dream Team) 소프트웨어 투자에 최적화된 드림팀(Dream Team) 소프트웨어 투자에 최적화된 드림팀(Dream Team) 소프트웨어 투자에 최적화된 드림팀(Dream Team) 
+											</strong>
+										</div>
+									</a>
+									<div class="tags">
+										<strong class="title">Tag</strong>
+										<a href="#">왓챠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">프로그램스</a>,
+										<a href="#">넵튠</a>,
+										<a href="#">케이큐브</a>
+									</div>
+								</div>
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<img src="../images/news/thum_newslist_1.jpg" alt="" />
+										</div>
+										<div class="info">
+											<span class="b-date">
+												December 21, 2015
+											</span>
+											<strong class="b-title">
+												소렐(SOREL) 롯데백화점
+											</strong>
+										</div>
+									</a>
+									<div class="tags">
+										<strong class="title">Tag</strong>
+										<a href="#">왓챠</a>,
+										<a href="#">프로그램스</a>
+									</div>
+								</div>
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<img src="../images/news/thum_newslist_1.jpg" alt="" />
+										</div>
+										<div class="info">
+											<span class="b-date">
+												December 21, 2015
+											</span>
+											<strong class="b-title">
+												소렐(SOREL) 롯데백화점 본점, 팝업 스토어 오픈! 
+											</strong>
+										</div>
+									</a>
+									<div class="tags">
+										<strong class="title">Tag</strong>
+										<a href="#">왓챠</a>,
+										<a href="#">프로그램스</a>
+									</div>
+								</div>
+								<div class="item">
+									<a href="#">
+										<div class="c-img">
+											<img src="../images/news/thum_newslist_1.jpg" alt="" />
+										</div>
+										<div class="info">
+											<span class="b-date">
+												December 21, 2015
+											</span>
+											<strong class="b-title">
+												소렐(SOREL) 롯데백화점 본점, 팝업 스토어 오픈! 
+											</strong>
+										</div>
+									</a>
+									<div class="tags">
+										<strong class="title">Tag</strong>
+										<a href="#">왓챠</a>,
+										<a href="#">프로그램스</a>
+									</div>
+								</div>
+							</div>
+							<div class="btn-area">
+								<a href="#" class="btn-blue-fixed">Learn More (4/9)</a>
+							</div>
+						</div>
+						<!-- //검색결과 있을 때 -->
+					</div>
+				</div>
+			</div>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<header id="header">
+	<div class="head-spot">
+		<div class="centered">
+			<h1>
+				<a href="./"><img src="/images/common/h_kcubeventures.png" alt="k cube ventures" /></a>
+			</h1>
+
+			<a href="#" class="btn-total" id="btn-total-open">
+				<i class="fa fa-bars"></i>
+			</a>
+
+			<!-- GNB -->
+			<nav class="gnb" id="gnb">
+				<ul>
+					<li class="m1">
+						<a href="#">ABOUT</a>
+					</li>
+					<li class="m2">
+						<a href="/family/family_list.html">FAMILY</a>
+					</li>
+					<li class="m3">
+						<a href="/team/team_list.html">TEAM</a>
+					</li>
+					<li class="m4">
+						<a href="/insight/insight_list.html">INSIGHT</a>
+					</li>
+					<li class="m5">
+						<a href="/news/news_list.html">NEWS</a>
+					</li>
+					<li class="m6">
+						<a href="#">CONTACT</a>
+					</li>
+				</ul>
+			</nav>
+			<!-- //GNB -->
+
+			<div class="head-side">
+				<a href="#" class="btn-head-search" id="btn-srchbar-open" title="검색">
+					<i class="fa fa-search"></i>
+				</a>
+				<div class="head-srch-box" id="head-srch-box">
+					<input type="text" name="inp-h-srch" class="inp-h-srch" title="검색어를 입력하세요." />
+					<a href="#" class="btn-h-srch" title="검색"><i class="fa fa-search"></i></a>
+					<a href="#" class="btn-h-close" id="btn-srchbar-close">
+						<img src="/images/common/btn_white_x.png" alt="검색 입력폼 닫기" />
+					</a>
+				</div>
+				<div class="lang">
+					<ul>
+						<li class="on"><a href="#">KOR</a></li>
+						<li><a href="#">ENG</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 일반 페이지 -->
+	<div class="page-title js-title">
+		<h3></h3>
+	</div>
+
+	<div class="lowmenu">
+		<!-- 메뉴가 1개일때
+		<span class="one-lowmenu">K CUBE INSIGHT</span>
+		<!-- //메뉴가 1개일때 -->
+
+
+
+
+
+<!-- family 메뉴 START -->
+<?
+if(eqyn($pageName, "family")){
+	$code_rs = get_tb_mgr_cate_list_001("FM", "*", "array" );
+?>
+		<div class="sel-lowmenu">
+			<label for="ser_fk_fm_mct_idx_mb" class="sr-only">하위 메뉴</label>
+			<select class="selectpicker" id="ser_fk_fm_mct_idx_mb" onchange="get_family_cate_search(ele.value);">
+
+				<option value="">VIEW ALL</option>
+<?
+	if($code_rs){
+		foreach($code_rs as $ors){
+?>
+				<option value="<?= $ors[mct_idx] ?>"><?= $ors[mct_name] ?></option>
+<?
+		}
+	}
+?>
+			</select>
+		</div>
+		
+		<div class="txt-lowmenu">
+			<ul id="ser_fk_fm_mct_idx_pc">
+				<li idx=""><a href="javascript:get_family_cate_search('');">VIEW ALL</a></li>
+<?
+	if($code_rs){
+		foreach($code_rs as $ors){
+?>
+				<li idx="<?= $ors[mct_idx] ?>"><a href="javascript:get_family_cate_search('<?= $ors[mct_idx] ?>');"><?= $ors[mct_name] ?></a></li>
+<?
+		}
+	}
+?>
+			</ul>
+		</div>
+<?
+}
+?>
+<!-- family 메뉴 END -->
+
+
+
+
+
+
+	</div>
+	<!-- //일반 페이지 -->
+
+	<!-- 태그 페이지
+	<div class="srch-search">
+		<label for="lb-srch-search" class="lb-srch">SEARCH</label>
+		<input type="text" name="lb-srch-search" id="lb-srch-search" class="inp-srch" />
+		<a href="#" class="btn-srch"><i class="fa fa-search"></i></a>
+	</div>
+	<!-- //태그 페이지 -->
+
+	<!-- 검색 페이지
+	<div class="tag-search">
+		<span class="block_after_inline">TAG ARCHIVES :</span>
+		<span>프로그램스</span>
+	</div>
+	<!-- //검색 페이지 -->
+</header><!-- //header -->
+
+<!-- 전체메뉴 -->
+<div class="totalmenu" id="totalmenu">
+	<div class="total-lang">
+		<ul>
+			<li><a href="#" class="btn-blue-lang">KOR</a></li>
+			<li><a href="#" class="btn-gray-lang">ENG</a></li>
+		</ul>
+	</div>
+	<h2 class="sr-only">전체 메뉴</h2>
+	<div class="total-gnb">
+		<ul>
+			<li>
+				<a href="#">ABOUT</a>
+			</li>
+			<li>
+				<a href="/family/family_list.html">FAMILY</a>
+			</li>
+			<li>
+				<a href="/team/team_list.html">TEAM</a>
+			</li>
+			<li>
+				<a href="/insight/insight_list.html">INSIGHT</a>
+			</li>
+			<li>
+				<a href="/news/news_list.html">NEWS</a>
+			</li>
+			<li>
+				<a href="#">CONTACT</a>
+			</li>
+		</ul>
+	</div>
+	<div class="total-community">
+		<div class="followUs">
+			<strong class="title">FOLLOW US</strong>
+			<ul>
+				<li>
+					<span class="ico ico-fb"><i class="fa fa-facebook-square"></i></span>
+					<a href="#" class="btn-blue-sns">Like It</a>
+				</li>
+				<li>
+					<span class="ico ico-twt"><i class="fa fa-twitter-square"></i></span>
+					<a href="#" class="btn-sky-sns">Follow</a>
+				</li>
+			</ul>
+		</div>
+		<div class="subscribe">
+			<strong class="title">SUBSCRIBE</strong>
+			<p class="txt">
+				케이큐브벤쳐스와 다양한 스타트업들의 <br />
+				최신 소식을 받아 보시려면<br />
+				E-mail 주소를남겨주세요
+			</p>
+			<div class="input-btn-email">
+				<input type="text" name="inp-email" class="form-control inp-email" placeholder="E-mail 주소" />
+				<a href="#" class="btn-blue-submit">Submit</a>
+			</div>
+
+			<div class="checkbox chk_signup-box">
+				<input type="checkbox" name="chk_signup-email" value="email" id="chk_signup-email" />
+				<label for="chk_signup-email">
+					본인은 E-mail 발송 <a href="#" class="link" data-toggle="modal" data-target="#pop-privacy">이용약관</a>에 동의했습니다.
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<a href="#" class="btn-total-close" id="btn-total-close">
+		<img src="/images/common/btn_black_x.png" alt="검색 입력폼 닫기" />
+	</a>
+</div>
+<!-- //전체메뉴 -->
