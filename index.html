@@ -1,57 +1,5 @@
 <?
-include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
-include $server_root_path."/lib/class/class_mgr_main.php";
-
-
-
-//-- 메인 비쥬얼 가져오기1
-//-- 업로드 경로
-get_updir( "mgr_main" );
-$main_url = $GLB_UP_FILE_URL;
-
-$sql_where = " and mmi_status = 'Y' ";
-$arr_sql = array(
-	"fild" => "*",
-	"table" => "tb_mgr_main",
-	"where" => $sql_where,
-	"orderby" => "order by mmi_seq asc, mmi_idx desc"
-);
-$db_result = get_record( $arr_sql );
-$rs = $db_result[result];
-
-
-
-
-
-
-//-- 메인 하단 뉴스 가져오기
-//-- 업로드 경로
-get_updir( "ins_news" );
-
-//-- 리스트 가져오기
-$ilist_size = 4;
-$sql_where = " and inw_status = 'Y'";
-$sql_where .= " and fk_inw_mct_cate = 'NW' ";
-
-
-$arr_sql = array(
-	"fild" => "*",
-	"table" => "tb_ins_news",
-	"where" => $sql_where,
-	"orderby" => "order by inw_ins_datetime desc, inw_idx desc"
-);
-$db_result = get_record( $arr_sql );
-$nw_rs = $db_result[result];
-
-
-
-//-- DB 닫기
-set_db_close();
-
-
-//-- Location
-$MENU2_NAME = "";
-$MENU2_LINK = "";
+phpinfo();
 ?>
 <!DOCTYPE html>
 <html lang="ko">
