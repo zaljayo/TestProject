@@ -1,0 +1,66 @@
+/* Slider */
+.slick-slider {display: block; position: relative;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-touch-callout: none;
+	-khtml-user-select: none;
+	-ms-touch-action: pan-y;
+	touch-action: pan-y;
+	-webkit-tap-highlight-color: transparent;
+}
+.slick-list {display: block; position: relative; overflow: hidden; margin: 0; padding: 0;}
+.slick-list:focus {outline: none;}
+.slick-list.dragging {cursor: pointer; cursor: hand;}
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+	-webkit-transform: translate3d(0, 0, 0);
+	-moz-transform: translate3d(0, 0, 0);
+	-ms-transform: translate3d(0, 0, 0);
+	-o-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+}
+
+.slick-track {display: block; position: relative; top: 0; left: 0;}
+.slick-track:before,
+.slick-track:after {display: table; content: '';}
+.slick-track:after {clear: both;}
+.slick-loading .slick-track {visibility: hidden;}
+.slick-slide {display: none; float: left; height: 100%; min-height: 1px;}
+[dir='rtl'] .slick-slide {float: right;}
+.slick-slide img {display: block;}
+.slick-slide.slick-loading img {display: none;}
+.slick-slide.dragging img {pointer-events: none;}
+.slick-initialized .slick-slide {display: block;}
+.slick-loading .slick-slide {visibility: hidden;}
+.slick-vertical .slick-slide {display: block; height: auto; border: 1px solid transparent;}
+
+/* 추가 옵션 */
+/* 레이아웃 */
+.spot-slide .item>a>img {margin:0 auto;}
+
+/* 도트 */
+.slick-dots {position:absolute; bottom:5px; width:100%; height:20px; text-align:center;}
+.slick-dots li {display:inline-block; margin:0 10px;}
+.slick-dots li:first-child {margin-left:0;}
+.slick-dots li button {position:relative; top:1px; display:inline-block;  text-indent:-9999px; width:13px; height:13px; border:1px solid #fff;; border-radius:50%;}
+.slick-dots li.slick-active button {background-color:#fff;}
+
+/* 재생/정지 */
+.btn-spot-slide {position:relative; top:-1px; display:inline-block; line-height:20px; line-height:20px;}
+.btn-spot-slide img {height:16px;}
+
+
+@media all and (min-width:1024px) {
+	/* 도트 */
+	.slick-dots {bottom:30px; height:24px;}
+	.slick-dots li {margin:0 15px;}
+	.slick-dots li button {top:-1px; width:18px; height:18px;}
+
+	/* 재생/정지 */
+	.btn-spot-slide {top:-3px; display:inline-block; line-height:24px; line-height:24px;}
+	.btn-spot-slide img {height:24px;}
+}

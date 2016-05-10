@@ -1,0 +1,259 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+
+//-- Location
+$MENU2_NAME = "ABOUT";
+$MENU2_LINK = "";
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>ABOUT | K Cube Ventures</title>
+<? include "inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = 'about';
+
+/* 페이지 초기화 */
+$(document).ready(function(){ 
+	$(".js-sel-focus").on("change", mSectionFocus); //모바일 일때, 섹션포커스
+	$(".js-list-focus>ul>li>a").bind("click", pcCectionFocus); //PC일때, 섹션포커스
+});
+/* 함수 정의 */
+//모바일 일때, 섹션포커스
+function mSectionFocus(){
+	var val = $(this).val();
+	var offset = $(val).offset();
+	$("body,html").stop().animate({scrollTop:offset.top},300);
+	$(val).attr("tabindex","-1");
+	$(val).focus();
+}
+
+//PC일때, 섹션포커스
+function pcCectionFocus(){
+	var thisHref = $(this).attr("href")
+	var offset = $(thisHref).offset();
+	$("body,html").stop().animate({scrollTop:offset.top},300);
+	$(thisHref).attr("tabindex","-1");
+	$(thisHref).focus();
+}
+//]]>
+</script>
+</head>
+<body>
+<? include "inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 일반 페이지 -->
+		<div class="page-title js-title">
+			<h3></h3>
+		</div>
+
+		<div class="lowmenu">
+			<!-- 메뉴 2개이상 -->
+			<div class="sel-lowmenu">
+				<label for="select-lowmenu" class="sr-only">하위 메뉴</label>
+				<select class="selectpicker js-sel-focus" id="select-lowmenu" >
+					<option value="#vision">VISION</option>
+					<option value="#invest">HOW WE INVEST</option>
+					<option value="#valueup">HOW WE VALUE UP</option>
+					<option value="#family">JOIN THE K CUBE FAMILY</option>
+				</select>
+			</div>
+			
+			<div class="txt-lowmenu js-list-focus">
+				<ul>
+					<li class="on"><a href="#vision">VISION</a></li>
+					<li><a href="#invest">HOW WE INVEST</a></li>
+					<li><a href="#valueup">HOW WE VALUE UP</a></li>
+					<li><a href="#family">JOIN THE K CUBE FAMILY</a></li>
+				</ul>
+			</div>
+			<!-- //메뉴 2개이상 -->
+		</div>
+	</header><!-- //header -->
+
+	<? include "inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "inc/location.html"; ?>
+
+		<div id="contents" class="contents-about">
+			<div class="vision" id="vision">
+				<div class="centered">
+					<h4 class="cont-title">VISION</h4>
+					<div class="spot-title">
+						<span class="block_after_inline">K Cube Ventures believes</span> in harnessing<br />
+						<span class="block_after_inline">the power of <strong class="bold">startups</strong></span> <strong class="bold">to change our world</strong>
+					</div>
+					<div class="txt ie11_01">
+						We believe entrepreneurship the ultimate process of solving real world problems, bettering the quality of all of our lives. <br />
+						This is why we hold entrepreneurs in the highest regard, and this conviction gives us the reason to stay devoted towards creating world-class nurturing ground for talented people to create startups.<br />
+						<br />
+						K Cube Ventures specializes in helping entrepreneurs from the early stages. <br />
+						We have a track record of identifying strong contenders and investing in startup teams even before incorporation. <br />
+						Our portfolio companies get to join the community network known as the K Cube Family that provide a sense of inclusion, 
+						and get to share similar visions and unconditional passion for what they respectively strive for.
+					</div>
+				</div>
+			</div>
+
+			<div class="invest" id="invest">
+				<div class="centered">
+					<h4 class="cont-title">HOW WE INVEST</h4>
+					<ul class="invest-list">
+						<li>
+							<div class="title-box t1">
+								<span class="title">FOCUS</span>
+							</div>
+							<div class="txt">
+								We primarily invest in all things mobile, ranging from mobile services and games, to deep tech. 
+							</div>
+						</li>
+						<li>
+							<div class="title-box t2">
+								<span class="title">STAGES</span>
+							</div>
+							<div class="txt">
+								Our focus has been on the seed stage to growth stage startups. We also invest in startups before product launch, service conception or even during team building stage.
+							</div>
+						</li>
+						<li>
+							<div class="title-box t3">
+								<span class="title">SCALE</span>
+							</div>
+							<div class="txt">
+								Our typical investment ranges from $100K to $1.5M per deal.
+							</div>
+						</li>
+						<li>
+							<div class="title-box t4">
+								<span class="title">CRITERIA</span>
+							</div>
+							<div class="txt">
+								We seek for the strongest team with the strongest sense of purpose, camaraderie, and will give all to become the painkillers of our society.
+							</div>
+						</li>
+					</ul>
+					<div class="fund-area">
+						<strong class="title">Our Funds</strong>
+						<div class="kakao">
+							<div class="c-img visible-upto-1023">
+								<img src="images/about/img_fund.png" alt=""  />
+							</div>
+							<div class="img-bg hidden-upto-1023">
+								<img src="images/about/img_fund1.png" alt="" class="img1" />
+								<img src="images/about/img_fund2.png" alt="" class="img2" />
+							</div>
+							<div class="txt">
+								Our current AUM (Asset Under Management) has reached $100M,<br />
+								with all four of our funds active and available for investments across the board:
+							</div>
+						</div>
+						
+						<div class="record">
+							<strong class="title">Milestone </strong>
+							<ul class="diamond-list">
+								<li><span class="block_after_inline">“K Cube Venture Fund"</span> ($10M, raised 06.2012)</li>
+								<li class="even"><span class="block_after_inline">“Kakao Ventures Fund"</span> ($30M, raised 07.2013)</li>
+								<li><span class="block_after_inline">“Kakao Digital Contents Fund"</span> ($35M, raised 12.2015)</li>
+								<li class="even"><span class="block_after_inline">“Kakao Game Growth Share Fund"</span> ($30M, raised 03.2016)</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="valueup" id="valueup">
+				<div class="centered">
+					<h4 class="cont-title">HOW WE VALUE UP</h4>
+					<ol class="value-olist">
+						<li>
+							<div class="title-box">
+								<span class="num">01</span>
+								<strong class="title">A good discussion partner</strong>
+							</div>
+							<div class="txt ie11_01">
+								The choice to pursue a startup is not an easy one and startup CEOs face unique challenges every day. 
+							</div>
+						</li>
+						<li>
+							<div class="title-box">
+								<span class="num">02</span>
+								<strong class="title">Proactive support</strong>
+							</div>
+							<div class="txt ie11_01">
+								Startups encounter new inflection points as they grow. Recruiting key developers, bringing C-level executives on board, establishing partnerships with large companies and entry into global markets are among some of these issues.<br />
+								K Cube Ventures provides invaluable support in navigating these stages.
+							</div>
+						</li>
+						<li>
+							<div class="title-box">
+								<span class="num">03</span>
+								<strong class="title">Networking</strong>
+							</div>
+							<div class="txt ie11_01">
+								K Cube Ventures offers networking events such as ‘Family CEO Day,’ a monthly networking event for our family companies. It is a forum for executives to share advice and discuss opportunities for cooperation with one another.
+							</div>
+						</li>
+						<li>
+							<div class="title-box">
+								<span class="num">04</span>
+								<strong class="title">Knowledge sharing</strong>
+							</div>
+							<div class="txt ie11_01">
+								K Cube family companies have access to an innovative online and mobile platform where they can share their best practices and past experiences.<br />
+								This knowledge sharing system helps companies to make more efficient and effective executive decisions.
+							</div>
+						</li>
+						<li>
+							<div class="title-box">
+								<span class="num">05</span>
+								<strong class="title">Business support</strong>
+							</div>
+							<div class="txt ie11_01">
+								Our experts provide startups with practical assistance in handling legal, tax & accounting, PR/marketing and human resources issues.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</div>
+
+			<div class="family" id="family">
+				<div class="centered">
+					<h4 class="cont-title">Join the K Cube Family</h4>
+					<div class="txt">
+						K Cube Ventures was established with a mission to support entrepreneurs who believe in making a difference in the world. <br />
+						We are unique in that we have created a “family culture” in which our entrepreneurs actively push and help one another through 
+						our online forum and Family CEO Day. <br />
+						<br />
+						This is why our portfolio companies describe themselves as being part of the “K Cube Family.”
+					</div>
+
+					<hr />
+
+					<? include "inc/btn-go-top.html"; ?>
+				</div>
+			</div>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "inc/footer.html"; ?>
+</div>
+</body>
+</html>

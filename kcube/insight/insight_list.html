@@ -1,0 +1,368 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+include $server_root_path."/lib/class/class_ins_news.php";
+
+//-- 업로드 경로
+get_updir( "ins_news" );
+
+$pageName = "insight";
+
+$code_rs = get_tb_mgr_cate_list_001("IS", "*", "array" );
+
+
+//-- DB 닫기
+//set_db_close();
+
+
+//-- Location
+$MENU2_NAME = "INSIGHT";
+$MENU2_LINK = "";
+?>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>INSIGHT 목록 | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = '<?= $pageName ?>';
+
+
+/* 페이징 초기 변수 */
+v_page = 1;
+v_list_size = 28;
+//v_list_size = 1;
+v_tmp_page = v_page;
+v_def_list_size = v_list_size;
+
+var v_ser_fk_inw_mct_cate = "IS";
+var v_ser_fk_inw_mct_idx = "";
+var v_search_yn  = false;
+
+
+
+function get_page_view( v_inw_idx ){
+	setHash( "&ser_fk_inw_mct_idx="+ v_ser_fk_inw_mct_idx );
+	location.href = "insight_view.html?inw_idx=" + v_inw_idx +"&ser_fk_inw_mct_cate="+ v_ser_fk_inw_mct_cate +"&ser_fk_inw_mct_idx="+ v_ser_fk_inw_mct_idx +"&page="+ v_page;
+}
+function get_more(){
+	v_page++;
+	v_search_yn = false;
+	get_page_list();
+}
+function get_ins_news_cate_search( val ){
+	v_ser_fk_inw_mct_idx = val;
+
+	cate_fn();
+
+	hashClear();
+	v_page = 1;
+	$('#div_list .item').remove();
+	v_search_yn = true;
+	get_page_list();
+}
+function get_page_list(){
+	var v_param = "page="+ v_page +"&list_size="+ v_list_size +"&ser_fk_inw_mct_cate="+ v_ser_fk_inw_mct_cate +"&ser_fk_inw_mct_idx="+ v_ser_fk_inw_mct_idx;
+//	console.log(v_param)
+	var v_html = "";
+	$.ajax({
+		type:"get" ,
+		url:"/lib_ajax/get_ins_news.php",
+		data:v_param ,
+		success:function(data){
+			var json = JSON.parse(data);
+			var v_recordcount = json.recordcount;
+//			console.log(json)
+//			console.log(json.sql_list)
+//			console.log(json.result)
+			if(v_recordcount == 0 || json.result == null){
+				v_page--;
+				if(v_search_yn){
+					v_html += "<div class='item'>검색된 데이타가 없습니다.</div>";
+					var $items = $(v_html);
+					$('#div_list').imagesLoaded( function() {
+						$('#div_list').append( $items ).isotope( 'appended', $items ).isotope('layout');
+					});
+					v_search_yn = false;
+				}else{
+					alert("검색된 데이타가 없습니다.");
+				}
+			}else{
+				var v_grid_sizer = "";
+				for(var i=0; i<json.result.length; i++){
+					db_inw_idx				= json.result[i].inw_idx;
+					db_inw_wname			= json.result[i].inw_wname;
+					db_inw_title			= json.result[i].inw_title;
+					db_fk_inw_mct_cate		= json.result[i].fk_inw_mct_cate;
+					db_fk_inw_mct_idx		= json.result[i].fk_inw_mct_idx;
+					db_inw_tag				= json.result[i].inw_tag;
+					db_inw_img_list			= json.result[i].inw_img_list;
+					db_inw_img_list_desc	= json.result[i].inw_img_list_desc;
+					db_inw_ins_datetime		= json.result[i].inw_ins_datetime;
+
+					v_link = "javascript:get_page_view("+ db_inw_idx +");";
+					
+					if(v_page == 1 && i == 0){
+						v_grid_sizer = "grid-sizer";
+					}else{
+						v_grid_sizer = "";
+					}
+					v_html += "<div class='item "+ v_grid_sizer +"'>";
+					v_html += "	<a href='"+ v_link +"'>";
+					v_html += "		<div class='c-img'>";
+					v_html += "			<span class='r-img'>";
+					v_html += "				<img src='<?= $GLB_UP_FILE_URL ?>/"+ db_inw_img_list +"' alt='"+ db_inw_title +"' />";
+					v_html += "				<span class='writer'>"+ db_inw_wname +"</span>";
+					v_html += "			</span>";
+					v_html += "		</div>";
+					v_html += "		<div class='info'>";
+					v_html += "			<span class='b-date'>"+ get_eng_date(db_inw_ins_datetime) +"</span>";
+					v_html += "			<strong class='bb-title'>"+ db_inw_title +"</strong>";
+					v_html += "			<span class='b-txt'>"+ db_inw_img_list_desc +"</span>";
+					v_html += "		</div>";
+					v_html += "	</a>";
+					v_html += "	<div class='tags'>";
+					v_html += "		<strong class='title'>Tag</strong>";
+					v_html += "		"+ get_tag_search_make(db_inw_tag);
+					v_html += "	</div>";
+					v_html += "</div>";
+
+				}
+
+//				$("#div_list").append(v_html);
+				var $items = $(v_html);
+				$('#div_list').imagesLoaded( function() {
+					$('#div_list').append( $items ).isotope( 'appended', $items ).isotope('layout');
+				});
+				hashClear();
+				
+				var view_cnt = v_page * v_list_size;
+				if(view_cnt > v_recordcount){
+					view_cnt = v_recordcount;
+				}
+				$("#a_list_more").text("Learn More ("+ view_cnt +"/"+ v_recordcount +")");
+			}
+		},
+		error:function(){
+			v_page--;
+			alert( "처리도중 오류가 발생하였습니다." );
+		}
+	});
+}
+
+
+/* 페이지 초기화 */
+var cate_fn = function(){
+	$("#ser_fk_inw_mct_idx_mb").val(v_ser_fk_inw_mct_idx);
+	$("#ser_fk_inw_mct_idx_pc li").each(function( idx ){
+		if($(this).attr("idx") == v_ser_fk_inw_mct_idx){
+			$(this).addClass("on");
+		}else{
+			$(this).removeClass("on");
+		}
+	});
+}
+var first_fn = function(){
+	cate_fn();
+
+	loadedIsotope(".js-grid")
+};
+
+$(document).ready(function(){
+	var json = checkForHash();
+
+	if("<?= $ser_fk_inw_mct_idx ?>" != ""){
+		v_ser_fk_inw_mct_idx = "<?= $ser_fk_inw_mct_idx ?>";
+		v_search_yn = true;
+	}else{
+		v_ser_fk_inw_mct_idx = json.ser_fk_inw_mct_idx;
+		if(v_ser_fk_inw_mct_idx == undefined){
+			v_ser_fk_inw_mct_idx = "";
+		}
+	}
+
+	var tmp_page = <?= $ipage ?>;
+	if(tmp_page != 1){
+		v_page = 1;
+		v_list_size = tmp_page * v_def_list_size;
+		v_tmp_page = tmp_page;
+		setHash("&ser_fk_inw_mct_idx="+ v_ser_fk_inw_mct_idx);
+	}
+
+	get_page_list();
+	first_fn();
+});
+
+
+
+/* 함수 정의 */
+// 이미지 로드후 Isotope 실행
+function loadedIsotope(e){
+	//IE 9이하 리턴
+	if(navigator.appName.indexOf("Internet Explorer")!=-1){
+		var badBrowser=(
+			navigator.appVersion.indexOf("MSIE 10")==-1 &&   //v10 is ok
+			navigator.appVersion.indexOf("MSIE 1")==-1  //v11, 12, etc. is fine too
+		);
+
+		if(badBrowser){
+			// navigate to error page
+			return;
+		}
+	}
+
+	$(e).imagesLoaded( function() {
+		$( ".js-grid>.item:first-child" ).addClass("grid-sizer");
+		$(e).isotope({
+			itemSelector: '.js-grid>.item',
+			percentPosition: true, 
+			layoutMode: 'packery', //빈칸채우기
+			masonry: {
+				columnWidth: '.grid-sizer'
+			}
+		});
+	});
+}
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 일반 페이지 -->
+		<div class="page-title js-title">
+			<h3></h3>
+		</div>
+
+		<div class="lowmenu">
+<?
+if(count($code_rs) > 1){
+?>
+			<div class="sel-lowmenu">
+				<label for="ser_fk_inw_mct_idx_mb" class="sr-only">하위 메뉴</label>
+				<select class="selectpicker" id="ser_fk_inw_mct_idx_mb" onchange="get_ins_news_cate_search(this.value);">
+					<option value="">VIEW ALL</option>
+<?
+	foreach($code_rs as $ors){
+?>
+					<option value="<?= $ors[mct_idx] ?>"><?= $ors[mct_name] ?></option>
+<?
+	}
+?>
+				</select>
+			</div>
+			
+			<div class="txt-lowmenu">
+				<ul id="ser_fk_inw_mct_idx_pc">
+					<li idx=""><a href="javascript:get_ins_news_cate_search('');">VIEW ALL</a></li>
+<?
+	foreach($code_rs as $ors){
+?>
+					<li idx="<?= $ors[mct_idx] ?>"><a href="javascript:get_ins_news_cate_search('<?= $ors[mct_idx] ?>');"><?= $ors[mct_name] ?></a></li>
+<?
+	}
+?>
+				</ul>
+			</div>
+
+
+<?
+}else{
+?>
+			<!-- 메뉴 1개 -->
+			<span class="one-lowmenu">K CUBE INSIGHT</span>
+			<!-- //메뉴 1개 -->
+<?
+}
+?>
+		</div>
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents">
+			<h4 class="cont-title">INSIGHT</h4>
+			<div class="cont-division">
+				<div class="insight-grid js-grid" id="div_list">
+					<!-- insight 리스트 컨텐츠 //-->
+				</div>
+				<div class="btn-area">
+					<a href="javascript:get_more();" class="btn-blue-fixed" id="a_list_more">Learn More (0/0)</a>
+				</div>
+			</div>
+			<aside class="aside">
+				<div class="posts">
+					<strong class="title">POPULAR POSTS</strong>
+					<ul class="info-list">
+<?
+$sql = "
+	select
+		inw_idx, inw_title, fk_inw_mct_cate, fk_inw_mct_idx, inw_read_cnt
+	from tb_ins_news
+	where inw_status = 'Y'
+	order by inw_read_cnt desc, inw_idx desc
+	limit 0,10
+";
+$ors = sql_array($sql);
+if(!$ors){
+?>
+						<li>
+							검색된 정보가 없습니다.
+						</li>
+<?
+}else{
+	foreach($ors as $rs){
+
+		if(eqyn($rs[fk_inw_mct_cate], "IS")){
+			$link = "/insight/insight_view.html?inw_idx=$rs[inw_idx]";
+		}else if(eqyn($rs[fk_inw_mct_cate], "NW")){
+			$link = "/news/news_list.html?inw_idx=$rs[inw_idx]";
+		}else{
+			$link = "";
+		}
+
+?>
+						<li>
+							<a href="<?= $link ?>"><?= $rs[inw_title] ?></a>
+							<span class="like"><span class="ico"><?= $rs[inw_read_cnt] ?></span></span>
+						</li>
+
+<?
+	}
+}
+//-- DB 닫기
+set_db_close();
+?>
+					</ul>
+				</div>
+			</aside>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

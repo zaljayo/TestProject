@@ -1,0 +1,380 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+
+//-- 업로드 경로
+get_updir( "family" );
+
+$pageName = "family";
+?>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>NEWS 목록 | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = 'news';
+
+/* 페이지 초기화 */
+$(document).ready(function(){
+	loadedIsotope(".js-grid")
+});
+
+/* 함수 정의 */
+// 이미지 로드후 Isotope 실행
+function loadedIsotope(e){
+	//IE 9이하 리턴
+	if(navigator.appName.indexOf("Internet Explorer")!=-1){
+		var badBrowser=(
+			navigator.appVersion.indexOf("MSIE 10")==-1 &&   //v10 is ok
+			navigator.appVersion.indexOf("MSIE 1")==-1  //v11, 12, etc. is fine too
+		);
+
+		if(badBrowser){
+			// navigate to error page
+			return;
+		}
+	}
+
+	$(e).imagesLoaded( function() {
+		$( ".js-grid>.js-grid-item:first-child" ).addClass("grid-sizer");
+		$(e).isotope({
+			itemSelector: '.js-grid>.item',
+			percentPosition: true, 
+			layoutMode: 'packery', //빈칸채우기
+			masonry: {
+				columnWidth: '.grid-sizer'
+			}
+		});
+	});
+}
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 일반 페이지 -->
+		<div class="page-title js-title">
+			<h3></h3>
+		</div>
+
+		<div class="lowmenu">
+			<!-- 메뉴 2개이상 -->
+			<div class="sel-lowmenu">
+				<label for="select-lowmenu" class="sr-only">하위 메뉴</label>
+				<select class="selectpicker" id="select-lowmenu" >
+					<option value="#">Press Release</option>
+					<option value="#">K CUBE News</option>
+					<option value="#">Family News</option>
+				</select>
+			</div>
+			
+			<div class="txt-lowmenu">
+				<ul>
+					<li class="on"><a href="#">Press Release</a></li>
+					<li><a href="#">K CUBE News</a></li>
+					<li><a href="#">Family News</a></li>
+				</ul>
+			</div>
+			<!-- //메뉴 2개이상 -->
+		</div>
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents">
+			<h4 class="cont-title">K CUBE NEWS</h4>
+			<div class="cont-division">
+				<div class="news-grid js-grid">
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/news/thum_newslist_1.jpg" alt="" />
+							</div>
+							<div class="info">
+								<span class="b-date">
+									December 21, 2015
+								</span>
+								<strong class="b-title">
+									소프트웨어 투자에 최적화된 드림팀(Dream Team) 소프트웨어 투자에 최적화된 드림팀(Dream Team) 소프트웨어 투자에 최적화된 드림팀(Dream Team) 소프트웨어 투자에 최적화된 드림팀(Dream Team) 
+								</strong>
+							</div>
+						</a>
+						<div class="tags">
+							<strong class="title">Tag</strong>
+							<a href="#">왓챠</a>,
+							<a href="#">프로그램스</a>,
+							<a href="#">넵튠</a>,
+							<a href="#">프로그램스</a>,
+							<a href="#">넵튠</a>,
+							<a href="#">프로그램스</a>,
+							<a href="#">넵튠</a>,
+							<a href="#">케이큐브</a>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/news/thum_newslist_1.jpg" alt="" />
+							</div>
+							<div class="info">
+								<span class="b-date">
+									December 21, 2015
+								</span>
+								<strong class="b-title">
+									소렐(SOREL) 롯데백화점
+								</strong>
+							</div>
+						</a>
+						<div class="tags">
+							<strong class="title">Tag</strong>
+							<a href="#">왓챠</a>,
+							<a href="#">프로그램스</a>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/news/thum_newslist_1.jpg" alt="" />
+							</div>
+							<div class="info">
+								<span class="b-date">
+									December 21, 2015
+								</span>
+								<strong class="b-title">
+									소렐(SOREL) 롯데백화점 본점, 팝업 스토어 오픈! 
+								</strong>
+							</div>
+						</a>
+						<div class="tags">
+							<strong class="title">Tag</strong>
+							<a href="#">왓챠</a>,
+							<a href="#">프로그램스</a>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/news/thum_newslist_1.jpg" alt="" />
+							</div>
+							<div class="info">
+								<span class="b-date">
+									December 21, 2015
+								</span>
+								<strong class="b-title">
+									소렐(SOREL) 롯데백화점 본점, 팝업 스토어 오픈! 
+								</strong>
+							</div>
+						</a>
+						<div class="tags">
+							<strong class="title">Tag</strong>
+							<a href="#">왓챠</a>,
+							<a href="#">프로그램스</a>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/news/thum_newslist_1.jpg" alt="" />
+							</div>
+							<div class="info">
+								<span class="b-date">
+									December 21, 2015
+								</span>
+								<strong class="b-title">
+									소렐(SOREL) 롯데백화점 본점, 팝업 스토어 오픈! 
+								</strong>
+							</div>
+						</a>
+						<div class="tags">
+							<strong class="title">Tag</strong>
+							<a href="#">왓챠</a>,
+							<a href="#">프로그램스</a>,
+							<a href="#">넵튠</a>,
+							<a href="#">프로그램스</a>,
+							<a href="#">넵튠</a>,
+							<a href="#">케이큐브</a>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/news/thum_newslist_1.jpg" alt="" />
+							</div>
+							<div class="info">
+								<span class="b-date">
+									December 21, 2015
+								</span>
+								<strong class="b-title">
+									소렐(SOREL) 롯데백화점 본점, 팝업 스토어 오픈! 
+								</strong>
+							</div>
+						</a>
+						<div class="tags">
+							<strong class="title">Tag</strong>
+							<a href="#">왓챠</a>,
+							<a href="#">프로그램스</a>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/news/thum_newslist_1.jpg" alt="" />
+							</div>
+							<div class="info">
+								<span class="b-date">
+									December 21, 2015
+								</span>
+								<strong class="b-title">
+									소렐(SOREL) 롯데백화점 본점, 팝업 스토어 오픈! 
+								</strong>
+							</div>
+						</a>
+						<div class="tags">
+							<strong class="title">Tag</strong>
+							<a href="#">왓챠</a>,
+							<a href="#">프로그램스</a>
+						</div>
+					</div>
+					<div class="item">
+						<a href="#">
+							<div class="c-img">
+								<img src="../images/news/thum_newslist_1.jpg" alt="" />
+							</div>
+							<div class="info">
+								<span class="b-date">
+									December 21, 2015
+								</span>
+								<strong class="b-title">
+									소렐(SOREL) 롯데백화점 본점, 팝업 스토어 오픈! 
+								</strong>
+							</div>
+						</a>
+						<div class="tags">
+							<strong class="title">Tag</strong>
+							<a href="#">왓챠</a>,
+							<a href="#">프로그램스</a>
+						</div>
+					</div>
+				</div>
+				<div class="btn-area">
+					<a href="#" class="btn-blue-fixed">Learn More (4/9)</a>
+				</div>
+			</div>
+			<aside class="aside">
+				<div class="posts">
+					<strong class="title">POPULAR POSTS</strong>
+					<ul class="info-list">
+						<li>
+							<a href="#">노이즈(Noise)에 초연해지기-임지훈 대표노이즈(Noise)에 초연해지기-임지훈 대표</a>
+							<span class="like"><span class="ico">50,000</span></span>
+						</li>
+						<li>
+							<a href="#">노이즈(Noise)에 초연해지기-임지훈 대표</a>
+							<span class="like"><span class="ico">5,000</span></span>
+						</li>
+						<li>
+							<a href="#">노이즈(Noise)에 초연해지기-임지훈 대표</a>
+							<span class="like"><span class="ico">50</span></span>
+						</li>
+						<li>
+							<a href="#">노이즈(Noise)에 초연해지기-임지훈 대표</a>
+							<span class="like"><span class="ico">500</span></span>
+						</li>
+						<li>
+							<a href="#">노이즈(Noise)에 초연해지기-임지훈 대표</a>
+							<span class="like"><span class="ico">50,000</span></span>
+						</li>
+						<li>
+							<a href="#">노이즈(Noise)에 초연해지기-임지훈 대표</a>
+							<span class="like"><span class="ico">5,00</span></span>
+						</li>
+						<li>
+							<a href="#">노이즈(Noise)에 초연해지기-임지훈 대표</a>
+							<span class="like"><span class="ico">5,00</span></span>
+						</li>
+						<li>
+							<a href="#">노이즈(Noise)에 초연해지기-임지훈 대표</a>
+							<span class="like"><span class="ico">5,00</span></span>
+						</li>
+						<li>
+							<a href="#">노이즈(Noise)에 초연해지기-임지훈 대표</a>
+							<span class="like"><span class="ico">5,00</span></span>
+						</li>
+						<li>
+							<a href="#">노이즈(Noise)에 초연해지기-임지훈 대표</a>
+							<span class="like"><span class="ico">5,00</span></span>
+						</li>
+					</ul>
+				</div>
+				<div class="tags">
+					<strong class="title">TAGS</strong>
+					<div class="info">
+						<a href="#">왓챠플레이</a>
+						<a href="#">위브랩</a>
+						<a href="#">터치헌터</a>
+						<a href="#">정욱</a>
+						<a href="#" class="mid">임지훈</a>
+						<a href="#" class="big">케이큐브벤처스</a>
+						<a href="#">왓챠플레이</a>
+						<a href="#">위브랩</a>
+						<a href="#" class="mid">임지훈</a>
+						<a href="#">왓챠플레이</a>
+						<a href="#">위브랩</a>
+						<a href="#">터치헌터</a>
+						<a href="#">왓챠플레이</a>
+						<a href="#">위브랩</a>
+						<a href="#">터치헌터</a>
+						<a href="#" class="big">키즈노트</a>
+						<a href="#">정욱</a>
+						<a href="#">왓챠플레이</a>
+						<a href="#">위브랩</a>
+						<a href="#">터치헌터</a>
+						<a href="#">정욱</a>
+						<a href="#" class="mid">헬로히어로</a>
+						<a href="#" class="big">케이큐브벤처스</a>
+						<a href="#">왓챠플레이</a>
+						<a href="#">위브랩</a>
+						<a href="#" class="mid">헬로히어로</a>
+						<a href="#">왓챠플레이</a>
+						<a href="#">위브랩</a>
+						<a href="#">터치헌터</a>
+						<a href="#">왓챠플레이</a>
+						<a href="#">위브랩</a>
+						<a href="#">터치헌터</a>
+						<a href="#" class="big">키즈노트</a>
+						<a href="#">정욱</a>
+					</div>
+				</div>
+			</aside>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

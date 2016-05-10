@@ -1,0 +1,78 @@
+<!-- 전체메뉴 -->
+<div class="totalmenu" id="totalmenu">
+	<div class="total-lang">
+		<ul>
+			<li><a href="/" class="btn-blue-lang">KOR</a></li>
+			<li><a href="/en/" class="btn-gray-lang">ENG</a></li>
+		</ul>
+	</div>
+	<h2 class="sr-only">전체 메뉴</h2>
+	<div class="total-gnb">
+		<ul>
+			<li>
+				<a href="/about/about.html">ABOUT</a>
+			</li>
+			<li>
+				<a href="/family/family_list.html">FAMILY</a>
+			</li>
+			<li>
+				<a href="/team/team_list.html">TEAM</a>
+			</li>
+			<li>
+				<a href="/insight/insight_list.html">INSIGHT</a>
+			</li>
+			<li>
+				<a href="/news/news_list.html">NEWS</a>
+			</li>
+			<li>
+				<a href="/contact/contact.html">CONTACT</a>
+			</li>
+		</ul>
+	</div>
+	<div class="total-community">
+		<div class="followUs">
+			<strong class="title">FOLLOW US</strong>
+			<ul>
+				<li>
+					<span class="ico ico-fb"><a href="https://www.facebook.com/kcubeventures" target="_blank"><i class="fa fa-facebook-square"></i></a></span>
+					<div class="fb-like" data-href="https://www.facebook.com/kcubeventures" data-width="100" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+				</li>
+				<li>
+					<span class="ico ico-twt"><a href="https://twitter.com/kcubeventures" target="_blank"><i class="fa fa-twitter-square"></i></a></span>
+					<div class="more-twt">
+						<a href="https://twitter.com/kcubeventures" class="twitter-follow-button" data-show-count="false">Follow @kcubeventures</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="subscribe">
+			<strong class="title">SUBSCRIBE</strong>
+			<p class="txt">
+				케이큐브벤쳐스와 다양한 스타트업들의 <br />
+				최신 소식을 받아 보시려면<br />
+				E-mail 주소를남겨주세요
+			</p>
+
+			<form name="emailfm_mb" id="emailfm_mb" method="post" action="/proc/mail_subscribe_proc.php" target="_proc">
+				<div class="input-btn-email">
+					<input type="text" name="msr_email" id="msr_email_mb" class="form-control inp-email" placeholder="E-mail 주소" />
+					<a href="javascript:email_regi('mb');" class="btn-blue-submit">Submit</a>
+				</div>
+
+				<div class="checkbox chk_signup-box">
+					<input type="checkbox" name="email_agree_mb" id="email_agree_mb" value="email"/>
+					<label for="email_agree_mb">
+						본인은 E-mail 발송 <a href="#" class="link" data-toggle="modal" data-target="#pop-privacy">이용약관</a>에 동의했습니다.
+					</label>
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+	<a href="#" class="btn-total-close" id="btn-total-close">
+		<img src="/images/common/btn_black_x.png" alt="검색 입력폼 닫기" />
+	</a>
+</div>
+<!-- //전체메뉴 -->

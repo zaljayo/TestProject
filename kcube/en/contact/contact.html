@@ -1,0 +1,178 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+
+//-- Location
+$MENU2_NAME = "CONTACT";
+$MENU2_LINK = "";
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>CONTACT | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+var slickDelay = 4000; //슬라이드 딜레이 시간
+var isSpotAuto = true; //스팟 슬라이드 자동 설정
+var spotSlide;
+//페이지 상태에 따른 헤더 배경 변경
+pageName = 'contact';
+
+
+/* 페이지 초기화 */
+$(document).ready(function(){
+	spotSlick("#spot-slide");
+	$("#btn-spot-slide").bind("click", toggleSpotSlide);
+});
+
+
+/* 함수 정의 */
+//스팟슬라이드
+function spotSlick(e){
+	$(e).on("init", function(){ 
+		//$(".slick-dots>li>button").html('<span class="slide-style-dots"></span>');//<i class="fa fa-circle"></i>
+		$(".slick-dots").append('<li><a href="#" class="btn-spot-slide" id="btn-spot-slide"><img src="images/common/btn_spotslide_pause.png" alt="자동 정지" /></a></li>');
+		if( isSpotAuto ){
+			$("#btn-spot-slide").find(">img").attr({src:"../images/common/btn_spotslide_pause.png", alt:"자동 정지"});
+		}else{
+			$("#btn-spot-slide").find(">img").attr({src:"../images/common/btn_spotslide_play.png", alt:"자동 플레이"});
+		}
+	});
+
+	spotSlide = $(e).slick({
+		arrows: false,
+		dots: true,
+		infinite: true, //무한반복
+		speed: 700,
+		autoplaySpeed : slickDelay,
+		autoplay : isSpotAuto
+	});
+}
+
+//스팟슬라이드 자동재생 기능 스위치
+function toggleSpotSlide(){
+	var imgInfo = new Array(2);
+	var status = $("#btn-spot-slide").find(">img").attr("src");
+	status = status.indexOf("play.png") == -1 ? "pause" : "play";
+
+	if( status == "play" ){
+		//autoPlay 켬
+		spotSlide.slick("slickPlay").slick('setOption', 'autoplay', true);
+		imgInfo[0] = "../images/common/btn_spotslide_pause.png";
+		imgInfo[1] = "자동 정지"
+	}else{
+		//autoPlay 끔
+		spotSlide.slick("slickPause").slick('setOption', 'autoplay', false);
+		imgInfo[0] = "../images/common/btn_spotslide_play.png";
+		imgInfo[1] = "자동 플레이"
+	}
+
+	$("#btn-spot-slide").find(">img").attr({src:imgInfo[0], alt:imgInfo[1]});
+
+	return false;
+}
+
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 일반 페이지 -->
+		<div class="page-title js-title">
+			<h3></h3>
+		</div>
+
+		<div class="lowmenu">
+			<!-- 메뉴 1개 -->
+			<span class="one-lowmenu">WELCOME TO K CUBE!</span>
+			<!-- //메뉴 1개 -->
+		</div>
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents">
+			<h4 class="cont-title">CONTACT</h4>
+
+			<div class="cont-margin">
+				<div class="contact-dsc">
+					<span class="inline_after_block">K Cube Ventures is Kakao's corporate investment arm that was established by Brian Kim,</span> 
+					founder of Korea’s top mobile platform Kakao, and Jimmy Rim, an experienced venture capitalist.<br />
+					K Cube Ventures has invested into over 60 web/mobile and other tech startups and manages four early stage funds, $100M in AUM.
+				</div>
+
+				<!-- 스팟 슬라이드 -->
+				<div class="spot-slide ie11_01" id="spot-slide">
+					<div class="item">
+						<img src="../images/contact/img_contact2.jpg" alt="">
+					</div>
+					<div class="item">
+						<img src="../images/contact/img_contact1.jpg" alt="">
+					</div>
+					<div class="item">
+						<img src="../images/contact/img_contact3.jpg" alt="">
+					</div>
+				</div>
+				<!-- //스팟 슬라이드 -->
+				
+				<div class="contact-info">
+					<div class="loc-area">
+						<strong class="title">LOCATION</strong>
+						<dl class="addr-dlist">
+							<dt>K Cube Ventures Office</dt>
+							<dd>Mirae Esset Center, 6th Floor 664, Sampyeongdong Bundangu,Seongnam-si Gyeonggi-do, Republic of Korea</dd>
+						</dl>
+						<ul class="email-list">
+							<li>
+								<strong class="title">Business Plans</strong>
+								<span class="info"><a href="mailto:bplan&#64;kcube.vc">bplan&#64;kcube.vc</a></span>
+							</li>
+							<li>
+								<strong class="title">Press Inquiries</strong>
+								<span class="info"><a href="mailto:pr&#64;kcube.vc">pr&#64;kcube.vc</a></span>
+							</li>
+							<li>
+								<strong class="title">Jobs</strong>
+								<span class="info"><a href="mailto:jobs&#64;kcube.vc">jobs&#64;kcube.vc</a></span>
+							</li>
+						</ul>
+						<div class="map-area ie11_01">
+							<!-- 맵 API -->
+							<!--img src="../images/temp/temp_map.jpg" alt="" style="width: 100%;height:100%;"-->
+							<iframe src="/lib_map/ifm_map.php?lng=en&cmd=|not_click|&info_title=<b>K Cube Ventures</b>&gpsx=37.39744779519363&gpsy=127.11071938276291" id="ifm_map" border="0" frameborder="0" width="100%" height="400"></iframe>
+							<!-- //맵 API -->
+							<!-- //맵 API -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

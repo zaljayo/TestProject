@@ -1,0 +1,1 @@
+<img src="/admin_mgr/images/logo.gif" height="50">

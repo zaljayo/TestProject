@@ -1,0 +1,173 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+include $server_root_path."/lib/class/class_team.php";
+
+//-- 업로드 경로
+get_updir( "team" );
+
+$pageName = "team";
+
+
+
+//-- 리스트 가져오기
+$ilist_size = 9999;
+$sql_where = " and tm_status = 'Y'";
+
+$arr_sql = array(
+	"fild" => "tm_idx, tm_name, tm_name_eng, tm_pos, tm_pos_eng, tm_rnk, tm_rnk_eng, tm_list_img_pc, tm_list_img_mb, tm_int, tm_int_eng",
+	"table" => "tb_team",
+	"where" => $sql_where,
+	"orderby" => "order by tm_seq asc, tm_idx desc"
+);
+$db_result = get_record( $arr_sql );
+$rs = $db_result[result];
+
+//-- DB 닫기
+set_db_close();
+
+
+//-- Location
+$MENU2_NAME = "TEAM";
+$MENU2_LINK = "";
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>TEAM | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = '<?= $pageName ?>';
+
+/* 페이지 초기화 */
+
+
+/* 함수 정의 */
+
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 일반 페이지 -->
+		<div class="page-title js-title">
+			<h3></h3>
+		</div>
+
+		<div class="lowmenu">
+			<!-- 메뉴 1개 -->
+			<span class="one-lowmenu"><span class="block_after_inline">Supporting outstanding entrepreneurs to</span>  build the future</span>
+			<!-- //메뉴 1개 -->
+		</div>
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents">
+			<h4 class="cont-title">TEAM</h4>
+
+			<div class="cont-margin">
+				<div class="team-list ie11_01">
+					<ul>
+
+<?
+if($recordcount == 0){
+?>
+						<li><div class="pht-item first">검색된 데이타가 없습니다.</div></li>
+<?
+}else{
+	$NO = 0;
+	foreach($rs as $ors) {
+		$NO++;
+		$db_tm_idx			= $ors["tm_idx"];
+		$db_tm_name			= $ors["tm_name"];
+		$db_tm_name_eng		= $ors["tm_name_eng"];
+		$db_tm_pos			= $ors["tm_pos"];
+		$db_tm_pos_eng		= $ors["tm_pos_eng"];
+		$db_tm_rnk			= $ors["tm_rnk"];
+		$db_tm_rnk_eng		= $ors["tm_rnk_eng"];
+		$db_tm_list_img_pc	= $ors["tm_list_img_pc"];
+		$db_tm_list_img_mb	= $ors["tm_list_img_mb"];
+		$db_tm_int_eng		= $ors["tm_int_eng"];
+		
+		if(eqyn($db_tm_name, "NULL") || eqyn($db_tm_name_eng, "NULL")){
+		}else{
+
+?>
+
+						<li>
+							<div class="pht-box">
+								<img src="<?= $GLB_UP_FILE_URL.$db_tm_list_img_pc ?>" alt="<?= $db_tm_name ?>" />
+							</div>
+							<div class="title-box">
+								<div class="inner">
+									<div class="position">
+<?
+if(!eqyn($ors[tm_pos_eng], "") && !eqyn($ors[tm_rnk_eng], "")){
+	$str = "
+		<span>$ors[tm_pos_eng]</span>
+		<span class='bar'>|</span>
+		<span>$ors[tm_rnk_eng]</span>
+	";		
+}else if(!eqyn($ors[tm_pos_eng], "")){
+	$str = "
+		<span>$ors[tm_pos_eng]</span>
+	";
+}else if(!eqyn($ors[tm_rnk_eng], "")){
+	$str = "
+		<span>$ors[tm_rnk_eng]</span>
+	";
+}else{
+	$str = "";
+}
+
+echo $str;
+?>
+										<!--span><?= $db_tm_pos_eng ?></span>
+										<span class="bar">|</span>
+										<span><?= $db_tm_rnk_eng ?></span-->
+									</div>
+									<strong class="name"><?= $db_tm_name_eng ?></strong>
+								</div>
+							</div>
+							<div class="txt-box"><?= $db_tm_int_eng ?></div>
+						</li>
+<?
+		}
+	}
+}
+?>
+					</ul>
+				</div>
+			</div>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

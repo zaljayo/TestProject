@@ -1,0 +1,400 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+
+//-- Location
+$MENU2_NAME = "ABOUT";
+$MENU2_LINK = "";
+?>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>ABOUT | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = 'about';
+
+/* 페이지 초기화 */
+$(document).ready(function(){ 
+	$(".js-sel-focus").on("change", mSectionFocus); //모바일 일때, 섹션포커스
+	$(".js-list-focus>ul>li>a").bind("click", pcCectionFocus); //PC일때, 섹션포커스
+	$('#pop-slide').on('hidden.bs.modal', function () {
+		$(".js-pop-slide").slick("unslick");
+	});
+
+	$('#pop-slide').on('show.bs.modal', function () {
+		$("#pop-slide").css("visibility", "hidden");
+	});
+
+	$('#pop-slide').on('shown.bs.modal', function (e) {
+		var target = e.relatedTarget;
+		var idx = $(target).parent("li").index();
+		popSlick(".js-pop-slide", idx); //팝업 열린후 실행
+	})
+});
+/* 함수 정의 */
+//모바일 일때, 섹션포커스
+function mSectionFocus(){
+	var val = $(this).val();
+	var offset = $(val).offset();
+	$("body,html").stop().animate({scrollTop:offset.top},300);
+	$(val).attr("tabindex","-1");
+	$(val).focus();
+}
+
+//PC일때, 섹션포커스
+function pcCectionFocus(){
+	var thisHref = $(this).attr("href")
+	var offset = $(thisHref).offset();
+	$("body,html").stop().animate({scrollTop:offset.top},300);
+	$(thisHref).attr("tabindex","-1");
+	$(thisHref).focus();
+}
+
+//스팟슬라이드
+function popSlick(e,idx){
+	$(e).on("setPosition", function(){
+		$("#pop-slide").css("visibility", "visible");
+	});
+	$(e).slick({
+		arrows: true,
+		dots: true,
+		infinite: true, //무한반복
+		speed: 700
+	});
+	$(e).slick('slickGoTo',parseInt(idx));
+}
+
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<? include "../inc/pop-slide.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 일반 페이지 -->
+		<div class="page-title js-title">
+			<h3></h3>
+		</div>
+
+		<div class="lowmenu">
+			<!-- 메뉴 2개이상 -->
+			<div class="sel-lowmenu">
+				<label for="select-lowmenu" class="sr-only">하위 메뉴</label>
+				<select class="selectpicker js-sel-focus" id="select-lowmenu" >
+					<option value="#vision">VISION</option>
+					<option value="#invest">HOW WE INVEST</option>
+					<option value="#valueup">HOW WE VALUE UP</option>
+					<option value="#family">JOIN THE K CUBE FAMILY</option>
+				</select>
+			</div>
+			
+			<div class="txt-lowmenu js-list-focus">
+				<ul>
+					<li class="on"><a href="#vision">VISION</a></li>
+					<li><a href="#invest">HOW WE INVEST</a></li>
+					<li><a href="#valueup">HOW WE VALUE UP</a></li>
+					<li><a href="#family">JOIN THE K CUBE FAMILY</a></li>
+				</ul>
+			</div>
+			<!-- //메뉴 2개이상 -->
+		</div>
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents" class="contents-about">
+			<div class="vision" id="vision">
+				<div class="centered">
+					<h4 class="cont-title">VISION</h4>
+					<div class="spot-title">
+						<span class="inline_after_block"><span class="block_after_inline">케이큐브벤처스는</span> <strong class="bold">스타트업</strong>이</span>
+						<strong class="bold">세상을 더 아름답게</strong>
+						<span class="block_after_inline">만든다고 믿습니다. </span>
+					</div>
+					<div class="txt">
+						‘문제의식’과 ‘도전’<br />
+						스타트업의 기저에 흐르고 있는 두 개의 큰 줄기이자<br />
+						카카오와 같은 성공 사례를 만들어 낸 원동력 입니다.<br />
+						 <br />
+						<span class="block_after_inline">케이큐브벤처스는 더 나은 세상을 위한</span> 고민과 도전 정신을 가진 기업가분들이<br />
+						세상을 바꾸는 혁신을 이루어 나갈 수 있다고 믿습니다. <br />
+						 <br />
+						<span class="block_after_inline">‘창업’은 세상의 문제를 해결하는 과정이며,</span> 궁극적으로는 삶의 질을 높인다고 믿습니다. <br />
+						또한 인재들의 재능이 적재적소에 쓰이게 한다고 믿습니다.<br />
+						그렇기에 창업자 분들을 진심으로 존경하고,<br /> 
+						역량 있는 인재들이 창업하기에 좋은 환경을 조성하는데 최선을 다하고 있습니다.<br />
+						 <br />
+						앞으로도 케이큐브벤처스는 개인 뿐 아니라 사회 전반에<br />
+						꿈과 혁신을 불어넣는 역할을 할 것입니다.
+					</div>
+				</div>
+			</div>
+
+			<div class="invest" id="invest">
+				<div class="centered">
+					<h4 class="cont-title">HOW WE INVEST</h4>
+					<ul class="invest-list">
+						<li>
+							<div class="title-box t1">
+								<span class="title">투자분야</span>
+							</div>
+							<div class="txt">
+								‘서비스, 기술기반, 게임’으로 구성된 핵심 투자분야에 집중하며, 관련 기술 및 산업이 포괄적으로 결합된 S/W및 ICT 분야의 다양한 혁신 기술 및 서비스들에 투자합니다
+							</div>
+						</li>
+						<li>
+							<div class="title-box t2">
+								<span class="title">투자단계</span>
+							</div>
+							<div class="txt">
+								<span class="inline_after_block">초기기업(Seed)부터 성장단계(Series A)에 있는 스타트업에 투자합니다. 좋은 팀과 역량을 갖춘</span>
+								스타트업이라면 시기에 관계없이 투자합니다.<br />
+								<span class="inline_after_block">서비스 출시 전이나 법인 설립 전의 기업은 물론</span> 
+								<span class="inline_after_block">창업팀을 구성할 때부터 기업가분들과 함께</span>
+								고민합니다.
+								<a href="http://www.slideshare.net/bjang86/ir-deck" target="_blank" class="btn-blue-block"><span class="plus">사업계획서 작성 Tip</span></a>
+							</div>
+						</li>
+						<li>
+							<div class="title-box t3">
+								<span class="title">투자규모</span>
+							</div>
+							<div class="txt">
+								초기기업에 대한 5억원 내외의 Seed 단계 투자부터 20억 이상 규모의 Series A 투자까지 진행하며, 각 스타트업의 성장 단계와 사업 분야에 맞는 규모의 금액을 투자합니다.<br />
+								<span class="inline_after_block">‘중소기업청 민간투자주도형 기술창업프로그램(TIPS)’운영 기관으로서 ‘글로벌’ 혹은 ‘기술기반’ 연관 사업일 경우정부로부터 추가 자금을 유치할</span> 
+								수 있도록 지원합니다. 
+							</div>
+						</li>
+						<li>
+							<div class="title-box t4">
+								<span class="title">투자기준</span>
+							</div>
+							<div class="txt">
+								‘사람이 전부’라는 투자 철학으로, 해당 사업을 위해 모인 Team이 해결하려는 문제와 그 문제를 해결 할 수 있는 역량을 보유하고 있는지 살펴봅니다. <br />
+								<span class="inline_after_block">‘사명감’을 갖고 사업을 하는 분들이 성공한다고</span> 
+								믿기 때문입니다. <br />
+								<span class="inline_after_block">또한, 사람들이 불편해 하는 세상의 ‘문제’를 해결해 주는 ‘Painkiller’ 와같은 사업에 투자하는 것을</span> 
+								가치 있게 생각합니다.
+							</div>
+						</li>
+					</ul>
+					<div class="fund-area">
+						<strong class="title">Our Funds</strong>
+						<div class="kakao">
+							<div class="c-img visible-upto-1023">
+								<img src="../images/about/img_fund.png" alt=""  />
+							</div>
+							<div class="img-bg hidden-upto-1023">
+								<img src="../images/about/img_fund1.png" alt="" class="img1" />
+								<img src="../images/about/img_fund2.png" alt="" class="img2" />
+							</div>
+							<div class="txt">
+								<span class="block_after_inline">창업투자사(Venture Capital)의</span> 근본적인 목적은 도전이 한계를 이기고<br />
+								<span class="block_after_inline">실력이 거대 자본을 넘어설 수 있는</span> 환경을 만들기 위함입니다.<br />
+								<br />
+								<span class="block_after_inline">케이큐브벤처스는 잠재력 있는 인재에게</span> 가장 필요한 시기에 자금을 지원한다는 원칙 아래<br />
+								<span class="block_after_inline">유망 기업가들을 적극 발굴하고,</span> 그들이 혁신을 만들어 갈 수 있도록 지원하고 있습니다.<br />
+								<span class="block_after_inline">이를 통해 IT 산업의 혁신과 벤처 생태계의</span> 선 순환에 기여해나갈 것 입니다. 
+							</div>
+						</div>
+						
+						<div class="record">
+							<strong class="title">투자조합 결성 Milestone </strong>
+							<ul class="diamond-list">
+								<li><span class="years">2012년:</span> 케이큐브1호벤처투자조합 [115.6억원]</li>
+								<li class="even"><span class="years">2013년:</span> 카카오청년창업펀드 [300억원]</li>
+								<li><span class="years">2015년:</span> 카카오디지털콘텐츠펀드 [341억원]</li>
+								<li class="even"><span class="years">2016년:</span> 카카오성장나눔게임펀드 [300억원]</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="valueup" id="valueup">
+				<div class="centered">
+					<h4 class="cont-title">HOW WE VALUE UP</h4>
+					<ol class="value-olist">
+						<li>
+							<div class="title-box">
+								<span class="num">01</span>
+								<strong class="title">영역별 전문 투자 파트너</strong>
+							</div>
+							<div class="txt">
+								단순히 재무적인 관점의 투자를 넘어 IT 산업을 이해하고 있는 영역별 투자 파트너들이 함께합니다. <br />
+								<span class="inline_after_block">S/W 및 ICT 산업에서의 각자 15년 이상의 오랜 경험과 인사이트를 보유했으며IT업계 전반의 핵심인력과</span> 
+								<span class="inline_after_block">교류할 수 있는 네트워크를 보유해 스타트업이 마주칠 다양한 경영 및 사업적 사안에 대해 실질적인 도움을</span> 제공합니다. 
+							</div>
+						</li>
+						<li>
+							<div class="title-box">
+								<span class="num">02</span>
+								<strong class="title">적극적인 지원</strong>
+							</div>
+							<div class="txt">
+								스타트업은 성장 단계별로 다양한 변곡점을 마주하게 됩니다. 인재 영입, 추가 투자 유치, 해외진출, 대기업과의 사업협력, 대외 홍보 등 스타트업이 진정한 기업으로 성장하는 데 필요한 도움을 제공하고 있습니다. <br />
+								특히 국내 최고의 모바일 인사이트를 보유한 카카오와의 사업 협력을 고려하고 있는 스타트업에게는 카카오와 적시에 협력할 수 있는 기회를 적극 도모하고 있습니다.
+							</div>
+						</li>
+						<li>
+							<div class="title-box">
+								<span class="num">03</span>
+								<strong class="title">케이큐브 패밀리 문화</strong>
+							</div>
+							<div class="txt">
+								<span class="inline_after_block">케이큐브벤처스가 투자한 핵심 인재들이 서로 밀어주고 끌어주며 함께 성장하는 ‘패밀리 문화’를 만들어 가고</span> 
+								<span class="inline_after_block">있습니다. 투자한 기업의 CEO 들과 Advisor들이 서로 인사이트를 공유하며 편하게 교류 할 수 있는 정기</span> 
+								<span class="inline_after_block">모임을 월 1회 이상 마련하고 있습니다. 또한 기업가분들이 서로 궁금한 점을 논의 할수 있는 플랫폼을</span> 
+								제공하고 있으며, One-point lesson이 필요한 경우 해당 분야의 적임자를 찾아 연결해 드립니다.
+							</div>
+						</li>
+						<li>
+							<div class="title-box">
+								<span class="num">04</span>
+								<strong class="title">경영/사업 운영 지원</strong>
+							</div>
+							<div class="txt">
+								사업을 하다 보면 세무/법무/회계와 같은 이슈와 홍보/마케팅, HR 이슈에 자주 부딪히게 됩니다.<br />
+								케이큐브벤처스의 내부 전문가들이 해당 이슈에 대해 실질적인 도움을 드립니다. 나아가 외부의 검증된 파트너들을 연결해 전문적인 도움을 받으실 수 있도록 지원하고 있습니다.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</div>
+
+			<div class="family" id="family">
+				<div class="centered">
+					<h4 class="cont-title">Join the K Cube Family</h4>
+					<div class="txt">
+						<span class="block_after_inline">세상의 문제에 깊게 공감하며 ‘판을 뒤집을 수 있는’ </span>
+						꿈과 비전을 쫓는 기업가분들을 존경합니다. <br />
+						<span class="block_after_inline">세상에 필요한 일을 한다는 믿음 하나로 </span>
+						<span class="block_after_inline">미래의 불확실성 속에서 수 많은 난관을 극복해</span>
+						나가고 있기 때문입니다. <br />
+						 <br />
+						<span class="block_after_inline">케이큐브벤처스는 이러한 기업가분들의 협력에서</span>
+						시너지가 발생한다고 생각합니다. <br />
+						<span class="block_after_inline">그래서 인재들이 서로 밀어주고 끌어주며</span>
+						<span class="block_after_inline">하나의 그룹처럼 움직이는 ‘케이큐브 패밀리 문화’를</span>
+						만들어가고 있습니다.<br />
+						 <br />
+						개별 인재들이 잘 해 나가는 경우는 종종 있지만, <br />
+						<span class="block_after_inline">특급 인재들이 큰 꿈을 가지고 함께 혁신을</span>
+						도모하는 사례는 흔치 않습니다.<br />
+						<br />
+						기존 조직에서 개인을 위한 성과를 내던 사람들도<br />
+						 <span class="block_after_inline">자신이 믿는 문제를 풀어 나가기 위해 만든</span>
+						스타트업에서는 더 높은 차원의 성과를 냅니다.<br />
+						<span class="block_after_inline">이러한 사람들이 모여 함께 성장해 나간다면</span>
+						전에 없던 시너지를 발휘할 수 있습니다.
+					</div>
+					<ul class="pht-list" class="js-pht-list">
+						<li>
+							<a href="#" data-toggle="modal" data-target="#pop-slide">
+								<img src="../images/about/thum_aboutfamily1.jpg" alt="" class="pht" />
+								<span class="hover-box">
+									<img src="../images/common/bu_white_plus.png" alt="" class="plus" />
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="modal" data-target="#pop-slide">
+								<img src="../images/about/thum_aboutfamily2.jpg" alt="" class="pht"  />
+								<span class="hover-box">
+									<img src="../images/common/bu_white_plus.png" alt="" class="plus" />
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="modal" data-target="#pop-slide">
+								<img src="../images/about/thum_aboutfamily3.jpg" alt="" class="pht" />
+								<span class="hover-box">
+									<img src="../images/common/bu_white_plus.png" alt="" class="plus" />
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="modal" data-target="#pop-slide">
+								<img src="../images/about/thum_aboutfamily4.jpg" alt="" class="pht" />
+								<span class="hover-box">
+									<img src="../images/common/bu_white_plus.png" alt="" class="plus" />
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="modal" data-target="#pop-slide">
+								<img src="../images/about/thum_aboutfamily5.jpg" alt="" class="pht" />
+								<span class="hover-box">
+									<img src="../images/common/bu_white_plus.png" alt="" class="plus" />
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="modal" data-target="#pop-slide">
+								<img src="../images/about/thum_aboutfamily6.jpg" alt="" class="pht" />
+								<span class="hover-box">
+									<img src="../images/common/bu_white_plus.png" alt="" class="plus" />
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="modal" data-target="#pop-slide">
+								<img src="../images/about/thum_aboutfamily7.jpg" alt="" class="pht" />
+								<span class="hover-box">
+									<img src="../images/common/bu_white_plus.png" alt="" class="plus" />
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="modal" data-target="#pop-slide">
+								<img src="../images/about/thum_aboutfamily8.jpg" alt="" class="pht" />
+								<span class="hover-box">
+									<img src="../images/common/bu_white_plus.png" alt="" class="plus" />
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-toggle="modal" data-target="#pop-slide">
+								<img src="../images/about/thum_aboutfamily9.jpg" alt="" class="pht" />
+								<span class="hover-box">
+									<img src="../images/common/bu_white_plus.png" alt="" class="plus" />
+								</span>
+							</a>
+						</li>
+					</ul>
+
+					<hr />
+
+					<? include "../inc/btn-go-top.html"; ?>
+				</div>
+			</div>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

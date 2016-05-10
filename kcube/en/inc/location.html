@@ -1,0 +1,26 @@
+<div class="location" id="div_location">
+
+	<a href="/en/">HOME</a>
+	<span class="bullet">/</span>
+
+<?
+if(!eqyn($MENU2_NAME, "") && !eqyn($MENU2_LINK, "")){
+	echo "
+		<a href='$MENU2_LINK'>$MENU2_NAME</a>
+	";
+
+}else if(!eqyn($MENU2_NAME, "")){
+	echo "
+		<span class='current'>$MENU2_NAME</span>
+	";
+}
+
+
+if(!eqyn($MENU3_NAME, "")){
+	echo "
+		<span class='bullet'>/</span>
+		<span class='current'>$MENU3_NAME</span>
+	";
+}
+?>
+</div><!-- //location -->

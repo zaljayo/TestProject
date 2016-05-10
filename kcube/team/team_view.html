@@ -1,0 +1,301 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+include $server_root_path."/lib/class/class_team.php";
+
+//-- 업로드 경로
+get_updir( "ins_news" );
+$ins_news_url = $GLB_UP_FILE_URL;
+
+get_updir( "team" );
+
+$pageName = "team";
+
+
+get_tb_team_rq( "g" );
+if(eqyn($rq_tm["tm_idx"], 0)){
+	printmsgback("해당 정보를 찾을수 없습니다.");
+}else{
+	get_tb_team_info_001( $rq_tm["tm_idx"] );
+
+	if(!eqyn($db_tm[result_cmd], "YESDATA") || !eqyn($db_tm['tm_status'], "Y")){
+		printmsgback("해당 정보를 찾을수 없습니다.");
+	}
+}
+
+/* 조회수 업데이트 */
+set_tb_team_read_cnt_proc_001($rq_tm["tm_idx"]);
+
+
+/* 다음글 key 가져오기 */
+$next_tm_idx = 0;
+$sql = "select tm_idx from tb_team where tm_status='Y' and tm_seq < $db_tm[tm_seq] and (tm_name != 'NULL' or tm_name_eng != 'NULL') order by tm_seq desc, tm_idx asc limit 0, 1";
+$rs = sql_fetch( $sql );
+if($rs){
+	$next_tm_idx = $rs[0];
+}
+
+
+/* 이전글 key 가져오기 */
+$pre_tm_idx = 0;
+$sql = "select tm_idx from tb_team where tm_status='Y' and tm_seq > $db_tm[tm_seq] and (tm_name != 'NULL' or tm_name_eng != 'NULL') order by tm_seq asc, tm_idx desc limit 0, 1";
+$rs = sql_fetch( $sql );
+if($rs){
+	$pre_tm_idx = $rs[0];
+}
+
+
+//-- Location
+$MENU2_NAME = "TEAM";
+$MENU2_LINK = "";
+?>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>TEAM 상세 | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = '<?= $pageName ?>';
+
+
+
+/* 페이징 초기 변수 */
+v_page = 1;
+v_list_size = 4;
+//v_list_size = 1;
+v_tmp_page = v_page;
+v_def_list_size = v_list_size;
+
+
+var v_more_yn  = false;
+function get_news_more(){
+	v_page++;
+	v_more_yn = true;
+	get_news_list();
+}
+
+function get_news_list(){
+	var v_param = "page="+ v_page +"&list_size="+ v_list_size +"&ser_fk_inw_mct_cate=NW&ser_fk_inw_tm_idx=<?= $rq_tm["tm_idx"] ?>";
+//	console.log(v_param)
+	var v_html = "";
+	$.ajax({
+		type:"get" ,
+		url:"/lib_ajax/get_ins_news.php",
+		data:v_param ,
+		success:function(data){
+			var json = JSON.parse(data);
+			var v_recordcount = json.recordcount;
+//			console.log(json)
+//			console.log(json.sql_list)
+//			console.log(json.result)
+			if(v_recordcount == 0 || json.result == null){
+				v_page--;
+				if(v_more_yn){
+					alert("검색된 데이타가 없습니다.");
+				}else{
+					$("#div_news").hide();
+					v_html += "<div class='item'>검색된 데이타가 없습니다.</div>";
+					$('#div_news_list').html( v_html );
+					v_more_yn = false;
+				}
+			}else{
+				var v_grid_sizer = "";
+				for(var i=0; i<json.result.length; i++){
+					db_inw_idx				= json.result[i].inw_idx;
+					db_inw_title			= json.result[i].inw_title;
+					db_fk_inw_mct_cate		= json.result[i].fk_inw_mct_cate;
+					db_fk_inw_mct_idx		= json.result[i].fk_inw_mct_idx;
+					db_inw_tag				= json.result[i].inw_tag;
+					db_inw_img_list			= json.result[i].inw_img_list;
+					db_inw_img_list_desc	= json.result[i].inw_img_list_desc;
+					db_inw_ins_datetime		= json.result[i].inw_ins_datetime;
+
+					v_link = "/news/news_view.html?inw_idx="+ db_inw_idx;
+					
+					v_html +='<div class="item">';
+					v_html +='	<a href="/news/news_view.html?inw_idx='+ db_inw_idx +'">';
+					v_html +='		<div class="c-img">';
+					v_html +='			<img src="<?= $ins_news_url ?>'+ db_inw_img_list +'" alt="'+ db_inw_title +'" />';
+					v_html +='		</div>';
+					v_html +='		<div class="info">';
+					v_html +='			<span class="b-date">'+ get_eng_date(db_inw_ins_datetime) +'</span>';
+					v_html +='			<strong class="b-title">'+ db_inw_img_list_desc +'';
+					v_html +='			</strong>';
+					v_html +='		</div>';
+					v_html +='	</a>';
+					v_html +='	<div class="tags">';
+					v_html +='		<strong class="title">Tag</strong>';
+					v_html +='		'+ get_tag_search_make(db_inw_tag) ;
+					v_html +='	</div>';
+					v_html +='</div>';
+				}
+
+				$("#div_news_list").append( v_html );
+
+				var view_cnt = v_page * v_list_size;
+				if(view_cnt > v_recordcount){
+					view_cnt = v_recordcount;
+				}
+				$("#a_list_more").text("Learn More ("+ view_cnt +"/"+ v_recordcount +")");
+			}
+		},
+		error:function(){
+			v_page--;
+			alert( "처리도중 오류가 발생하였습니다." );
+		}
+	});
+}
+
+function team_move( idx, cmd ){
+	if(idx == 0){
+		if(cmd == "next"){
+			alert("다음글이 없습니다.");		
+		}else{
+			alert("이전글이 없습니다.");
+		}
+		
+	}else{
+		location.href="team_view.html?tm_idx="+ idx;
+	}
+}
+
+$(document).ready(function(){
+	get_news_list();
+});
+
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 일반 페이지 -->
+		<div class="page-title js-title">
+			<h3></h3>
+		</div>
+
+		<div class="lowmenu">
+			<!-- 메뉴 1개 -->
+			<span class="one-lowmenu">Heal the World, Make It a Better Place</span>
+			<!-- //메뉴 1개 -->
+		</div>
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents">
+			<h4 class="cont-title">TEAM</h4>
+			<div class="cont-margin">
+				<div class="view-page">
+					<div class="spot-team">
+						<p class="c-img"><img src="<?= $GLB_UP_FILE_URL.$db_tm[tm_det_img_pc] ?>" alt="" /></p>
+						<div class="info">
+							<div class="position">
+<?
+if(!eqyn($db_tm[tm_pos], "") && !eqyn($db_tm[tm_rnk], "")){
+	$db_tm[tm_pos] = "
+		<span>$db_tm[tm_pos]</span>
+		<span class='bar'>|</span>
+		<span>$db_tm[tm_rnk]</span>
+	";		
+}else if(!eqyn($db_tm[tm_pos], "")){
+	$db_tm[tm_pos] = "
+		<span>$db_tm[tm_pos]</span>
+	";
+}else if(!eqyn($db_tm[tm_rnk], "")){
+	$db_tm[tm_pos] = "
+		<span>$db_tm[tm_rnk]</span>
+	";
+}else{
+	$db_tm[tm_pos] = "";
+}
+
+echo $db_tm[tm_pos];
+?>
+								<!--span><?= $db_tm[tm_pos] ?></span>
+								<span class="bar">|</span>
+								<span><?= $db_tm[tm_rnk] ?></span-->
+
+							</div>
+							<strong class="name"><?= $db_tm[tm_name] ?></strong>
+							<div class="sns">
+<?
+for($i=0; $i<count($arr_tm_web_tyle); $i++){
+	$ele = $arr_tm_web_tyle[$i];
+	$name = "tm_".$ele;
+	$db_val = $db_tm[$name];
+
+	if(!eqyn($db_val, "")){
+		if(eqyn($ele, "email")){
+?>
+								<a href="mailto:<?= $db_val ?>" target="_blank"><img src="../images/common/bu_gray_<?= $ele ?>.png" alt="" /></a>
+<?		
+		}else{
+?>
+								<a href="<?= $db_val ?>" target="_blank"><img src="../images/common/bu_gray_<?= $ele ?>.png" alt="" /></a>
+<?
+		}
+	}
+}
+?>
+							</div>
+						</div>
+					</div>
+					<div class="info-team">
+						<div class="txt">
+							<?= $db_tm[tm_int] ?>
+						</div>
+						<div class="history-list">
+							<ul>
+								<?= $db_tm[tm_profile] ?>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="view-btns">
+					<a href="javascript:team_move('<?= $next_tm_idx ?>', 'next');" class="btn-prev"><img src="../images/common/arr_blue_lft.png" alt="" /></a>
+					<a href="team_list.html" class="btn-go-list">List</a>
+					<a href="javascript:team_move('<?= $pre_tm_idx ?>', 'pre');" class="btn-next"><img src="../images/common/arr_blue_rgt.png" alt="" /></a>
+				</div>
+
+				<div class="view-related" id="div_news">
+					<strong class="title">RELATED NEWS</strong>
+					<div class="re-news-grid" id="div_news_list">
+						<!-- News 리스트 컨텐츠 //-->
+					</div>
+
+					<div class="btn-area">
+						<a href="javascript:get_news_more();" class="btn-blue-fixed" id="a_list_more">Learn More (0/0)</a>
+					</div>
+				</div>
+			</div>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

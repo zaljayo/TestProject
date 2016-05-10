@@ -1,0 +1,56 @@
+<meta property='fb:app_id' content='<?= $GLB_FACEBOOK_KEY ?>'/>
+<meta property='og:title' content='K Cube Ventures'/>
+<meta property='og:type' content='website'/>
+<meta property='og:image' content='http://<?= $GLB_DOAMIN ?>/share/kcube_share.jpg'/>
+<meta property='og:url' content='http://<?= $GLB_DOAMIN ?>'/>
+<meta property='og:description' content='케이큐브벤처스는 스타트업이 세상을 더 아름답게 만든다고 믿습니다.'/>
+<!--meta property='og:description' content='We believe in harnessing the power of startups to change our world.'/-->
+
+
+<!-- 제이쿼리 JS -->
+<script type="text/javascript" src="/en/js/jquery-1.12.0.min.js"></script>
+<!-- 부트스트랩 CSS -->
+<link rel="stylesheet" href="/en/css/bootstrap.css">
+<!-- 부트스트랩 JS -->
+<script type="text/javascript" src="/en/js/bootstrap.min.js"></script>
+<!-- 체크 및 라디오 CSS -->
+<link rel="stylesheet" href="/en/css/bootstrap-checkbox.radio.css"/>
+<!-- 셀렉트박스 CSS -->
+<link rel="stylesheet" href="/en/css/bootstrap-select.css"/>
+<!-- 셀렉트박스 JS -->
+<script type="text/javascript" src="/en/js/bootstrap-select.js"></script>
+<!-- 기본 CSS -->
+<link rel="stylesheet" type="text/css" href="/en/css/font.css" />
+<link rel="stylesheet" type="text/css" href="/en/css/common.css" />
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="/en/js/html5shiv.js"></script>
+	<script type="text/javascript" src="/en/js/respond.min.js"></script>
+<![endif]-->
+<!-- 이미지로드후 JS -->
+<script type="text/javascript" src="/en/js/imagesloaded.pkgd.min.js"></script>
+
+<!-- COMMON JS -->
+<script type="text/javascript" src="/en/js/common.js"></script>
+<script type="text/javascript" src="/js/default.js"></script>
+<script type="text/javascript" src="/js/string.js"></script>
+
+<!-- 그래픽폰트 CSS -->
+<link rel="stylesheet" href="/en/css/font-awesome.css"/>
+<!-- 파일첨부 JS -->
+<script type="text/javascript" src="/en/js/bootstrap-filestyle.min.js"></script>
+<!-- 슬리크 CSS -->
+<link rel="stylesheet" href="/en/css/slick.css" type="text/css" />
+<!-- 슬리크 JS -->
+<script type='text/javascript' src='/en/js/slick.js'></script>
+<!-- Isotope JS -->
+<script type="text/javascript" src="/en/js/isotope-docs.min.js"></script>
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.5&appId=<?= $GLB_FACEBOOK_KEY ?>";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

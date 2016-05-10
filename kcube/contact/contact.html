@@ -1,0 +1,215 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+
+//-- Location
+$MENU2_NAME = "CONTACT";
+$MENU2_LINK = "";
+?>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>CONTACT | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+var slickDelay = 4000; //슬라이드 딜레이 시간
+var isSpotAuto = true; //스팟 슬라이드 자동 설정
+var spotSlide;
+//페이지 상태에 따른 헤더 배경 변경
+pageName = 'contact';
+
+
+/* 페이지 초기화 */
+$(document).ready(function(){
+	spotSlick("#spot-slide");
+	$("#btn-spot-slide").bind("click", toggleSpotSlide);
+});
+
+
+/* 함수 정의 */
+//스팟슬라이드
+function spotSlick(e){
+	$(e).on("init", function(){ 
+		//$(".slick-dots>li>button").html('<span class="slide-style-dots"></span>');//<i class="fa fa-circle"></i>
+		$(".slick-dots").append('<li><a href="#" class="btn-spot-slide" id="btn-spot-slide"><img src="images/common/btn_spotslide_pause.png" alt="자동 정지" /></a></li>');
+		if( isSpotAuto ){
+			$("#btn-spot-slide").find(">img").attr({src:"../images/common/btn_spotslide_pause.png", alt:"자동 정지"});
+		}else{
+			$("#btn-spot-slide").find(">img").attr({src:"../images/common/btn_spotslide_play.png", alt:"자동 플레이"});
+		}
+	});
+
+	spotSlide = $(e).slick({
+		arrows: false,
+		dots: true,
+		infinite: true, //무한반복
+		speed: 700,
+		autoplaySpeed : slickDelay,
+		autoplay : isSpotAuto
+	});
+}
+
+//스팟슬라이드 자동재생 기능 스위치
+function toggleSpotSlide(){
+	var imgInfo = new Array(2);
+	var status = $("#btn-spot-slide").find(">img").attr("src");
+	status = status.indexOf("play.png") == -1 ? "pause" : "play";
+
+	if( status == "play" ){
+		//autoPlay 켬
+		spotSlide.slick("slickPlay").slick('setOption', 'autoplay', true);
+		imgInfo[0] = "../images/common/btn_spotslide_pause.png";
+		imgInfo[1] = "자동 정지"
+	}else{
+		//autoPlay 끔
+		spotSlide.slick("slickPause").slick('setOption', 'autoplay', false);
+		imgInfo[0] = "../images/common/btn_spotslide_play.png";
+		imgInfo[1] = "자동 플레이"
+	}
+
+	$("#btn-spot-slide").find(">img").attr({src:imgInfo[0], alt:imgInfo[1]});
+
+	return false;
+}
+
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 일반 페이지 -->
+		<div class="page-title js-title">
+			<h3></h3>
+		</div>
+
+		<div class="lowmenu">
+			<!-- 메뉴 1개 -->
+			<span class="one-lowmenu">WELCOME TO K CUBE!</span>
+			<!-- //메뉴 1개 -->
+		</div>
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents">
+			<h4 class="cont-title">CONTACT</h4>
+
+			<div class="cont-margin">
+				<!-- 스팟 슬라이드 -->
+				<div class="spot-slide ie11_01" id="spot-slide">
+					<div class="item">
+						<img src="../images/contact/img_contact2.jpg" alt="">
+					</div>
+					<div class="item">
+						<img src="../images/contact/img_contact1.jpg" alt="">
+					</div>
+					<div class="item">
+						<img src="../images/contact/img_contact3.jpg" alt="">
+					</div>
+				</div>
+				<!-- //스팟 슬라이드 -->
+				
+				<div class="contact-info">
+					<div class="intro-invest">
+						<strong class="title">투자안내</strong>
+						<span class="sub-title">사업계획서 송부</span>
+						<div class="txt">
+							저희와 파트너가 되고 싶으신 스타트업, 혹은 법인 설립 전이라도 창업을 고민하고 있는 좋은 팀은 팀 소개서와 함께 사업계획서를 <a href="mailto:bplan&#64;kcube.vc">bplan&#64;kcube.vc</a> 로 보내주시면 감사하겠습니다.
+						</div>
+						<span class="sub-title">투자 검토 과정 안내</span>
+						<ol class="intro-olist">
+							<li>1. 보내 주신 사업계획서를 한 주 간 검토합니다.</li>
+							<li>2. 그 다음 주 중, 주 1회 투자팀 전체가 모이는 회의에서 1차 투자 검토를 마칩니다.</li>
+							<li>3. 1차 검토를 완료한 주 중에 결과를 회신 드리는 것을 원칙으로 합니다.</li>
+						</ol>
+						<div class="gray-box">
+							매일 고된 일정으로 사업을 해 나가시는 기업가 분들께 검토 결과를 최대한 빠르게 회신 드리고자 하오나, 위와 같은 절차를 통해 검토를 진행하고 있으니 이 점 감안하시어 일정에 참고 부탁 드립니다. 모든 투자 관련 문의는 이메일로만 수신하고 있습니다.
+						</div>
+					</div>
+
+					<div class="intro-ad">
+						<strong class="title">홍보안내</strong>
+						<span class="sub-title">케이큐브 미디어킷</span>
+						<div class="txt ie11_01">
+							저희 K Cube Ventures의 주요활동, 투자현황, 성과 및 향후 전망을 매월 미디어 킷을 통해 알려드리고 있습니다. 모든 업계 관계자들에게 정확한 정보를 적시에 전달할 수 있도록 노력하겠습니다.<br />
+							<a href="http://www.slideshare.net/slideshow/embed_code/key/MmQS6wyAPxYoxM/" class="btn-plus-dnld" target="_blank">Korean Ver. K Cube Ventures Media Kit</a>
+						</div>
+						<span class="sub-title">PR 및 강연, 심사 등 문의</span>
+						<div class="txt ie11_01">
+							K Cube Ventures와 관련하여 다음과 같은 문의사항이 있으실 때, <a href="mailto:pr&#64;kcube.vc">pr&#64;kcube.vc</a>로 연락주시면 감사하겠습니다.
+						</div>
+						<ul class="square-list">
+							<li>K Cube Ventures 및 K Cube Family 문의</li>
+							<li>유승운 대표님 인터뷰</li>
+							<li>기타 (행사, 강의 관련)</li>
+						</ul>
+						<span class="sub-title">K CUBE FAMILY JOIN</span>
+						<div class="txt">
+							<a href="mailto:jobs&#64;kcube.vc">jobs&#64;kcube.vc</a>로 관심분야 or 관심스타트업과 함께 Resume를 보내주시면 검토 후 연락 드리겠습니다.
+						</div>
+					</div>
+
+					<div class="loc-area">
+						<strong class="title">LOCATION</strong>
+						<div class="addr-box">
+							<span class="sub-title">주소</span>
+							<dl class="addr-dlist">
+								<dt>도로명주소</dt>
+								<dd>경기도 성남시 분당구 판교역로 192번길 12 판교미래에셋센터 6층</dd>
+								<dt>지번주소</dt>
+								<dd>경기도 성남시 분당구 삼평동 664 판교미래에셋센터 6층</dd>
+							</dl>
+						</div>
+						<div class="trans-box">
+							<div class="bus">
+								<span class="sub-title">버스</span>
+								<ul class="bus-list">
+									<li><span>초록(일반)버스</span><span class="num">5,55</span></li>
+									<li><span>빨강(직행)버스</span><span class="num">1002, 4000, 9414</span></li>
+									<li><span>웰츠타워역 하차</span></li>
+								</ul>
+							</div>
+							<div class="subway">
+								<span class="sub-title">지하철</span>
+								<p class="txt">신분당선 판교역 1번출구 366m</p>
+							</div>
+						</div>
+						<div class="map-area ie11_01">
+							<!-- 맵 API -->
+							<!--img src="../images/temp/temp_map.jpg" alt="" style="width: 100%;height:100%;"-->
+							<iframe src="/lib_map/ifm_map.php?cmd=|not_click|&info_title=<b>K Cube Ventures</b>&gpsx=37.39744779519363&gpsy=127.11071938276291" id="ifm_map" border="0" frameborder="0" width="100%" height="400"></iframe>
+							<!-- //맵 API -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>

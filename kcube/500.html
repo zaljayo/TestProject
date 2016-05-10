@@ -1,0 +1,229 @@
+<html>
+<head>
+<title>가비아 호스팅 서비스:웹호스팅,웹메일호스팅,쇼핑몰호스팅,단독서버,동영상호스팅</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel=stylesheet type=text/css href="http://errdoc.gabia.net/css/hosting.css">
+</head>
+<body topmargin="0" leftmargin="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+                <td align="center">
+                        <table width="670" border="0" align="center" cellpadding="0" cellspacing="0">
+                                <tr>
+                                        <td height="50" style="padding-left:10px"><a href="http://www.gabia.com"><img src="http://errdoc.gabia.net/images/logo01.gif" width="95" height="37" border="0"></a></td>
+                                </tr>
+                        </table>
+                        <table width="670" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                        <td><img src="http://errdoc.gabia.net/images/img_500.gif" width="670" height="158"></td>
+                                </tr>
+                                <tr>
+                                        <td height="15"></td>
+                                </tr>
+                                <tr>
+                                        <td align="center">
+
+<table width="620" border="0" cellspacing="0" cellpadding="0">
+							<tr> 
+								<td width="22" valign="top"><img src="http://errdoc.gabia.net/images/bl_t_01.gif" width="19" height="18"></td>
+								<td width="600" height="38">이 에러는 CGI를 운용할 때, 
+									가장 많이 일어나는 에러입니다. 연결하려는 페이지가 CGI 파일인 경우 다음의 
+									내용을 체크하여 오류를 수정하시기 바랍니다.</td>
+							</tr>
+							<tr> 
+								<td height="15" colspan="2"> </td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><img src="http://errdoc.gabia.net/images/stitle_500_01.gif" width="550" height="18"></td>
+							</tr>
+							<tr> 
+								<td height="8" colspan="2"></td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><p style="margin-left:15;"><font color="#3366CC"><strong>[확인 
+										및 조치방법]</strong></font><br>
+										telnet 으로 웹서버상에 로그인한 후 쉘 상태에서 <strong><font color="#FF6600">perl 
+										-c test.cgi</font></strong> 와 같이 해당 cgi 
+										화일의 에러가 없는지<br>
+										여부를 확인해 보시기 바랍니다. 위 명령어를 기입하여 보았을 때 에러가 
+										없을 경우에는 Syntax ok 라는 <br>
+										메시지가 나오며 혹 에러가 있을 경우에는 해당 소스의 몇 번째 라인에서, 
+										어떠한 이유로 에러가 나는지 <br>
+										메시지를 출력하게 됩니다. <br>
+								</td>
+							</tr>
+							<tr> 
+								<td height="30" colspan="2"> </td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><img src="http://errdoc.gabia.net/images/stitle_500_02.gif"></td>
+							</tr>
+							<tr> 
+								<td height="8" colspan="2"></td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><p style="margin-left:15;"><font color="#3366CC"><strong>[확인 
+										및 조치방법]</strong></font><br>
+										telnet 으로 웹서버상에 로그인 후 쉘 상태에서<font color="#FF6600"><strong> 
+										ls -al</strong></font> 라는 명령어를 통하여 해당 
+										CGI 파일의 퍼미션을 <br>
+										확인할 수 있습니다. 읽기나 실행권한이 없으면<font color="#FF6600"><strong> 
+										chmod 755 test.cgi</strong></font> 와 같은 
+										명령어를 통해 해당 CGI <br>
+										파일의 권한을 변경할 수 있습니다. <br>
+								</td>
+							</tr>
+							<tr> 
+								<td height="30" colspan="2"> </td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><img src="http://errdoc.gabia.net/images/stitle_500_03.gif" width="550" height="18"></td>
+							</tr>
+							<tr> 
+								<td height="8" colspan="2"></td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><p style="margin-left:15;"><font color="#3366CC"><strong>[확인 
+										및 조치방법]</strong></font><br>
+										스크립트 파일을 FTP를 이용하여 서버로 업로드 할 때는 반드시 <font color="#FF6600"><strong>Ascii</strong></font> 
+										모드로 업로드 하셔야 합니다.<br>
+								</td>
+							</tr>
+							<tr> 
+								<td height="30" colspan="2"> </td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><img src="http://errdoc.gabia.net/images/stitle_500_04.gif"></td>
+							</tr>
+							<tr> 
+								<td height="8" colspan="2"></td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><p style="margin-left:15;"><font color="#3366CC"><strong>[확인 
+										및 조치방법]</strong></font><br>
+										각종 변수정의는 각 스크립트의 압축 파일내에 포함된 readme.txt 
+										에서 확인할 수 있습니다.<br>
+										스크립트 파일 내에서 참조하는 프로그램의 경로는 반드시 아래와 같아야 
+										합니다.
+<br>
+										<br>
+										<img src="http://errdoc.gabia.net/images/blank.gif" width="30" height="1"><font color="#FF6600"><strong>#!/usr/bin/perl</strong> 
+										</font>(맨 윗줄의 Perl 프로그램 경로)
+<br>
+										<img src="http://errdoc.gabia.net/images/blank.gif" width="30" height="1">#........
+
+										<br>
+										<img src="http://errdoc.gabia.net/images/blank.gif" width="30" height="1">$sendmail 
+										= &quot;/usr/lib/sendmail&quot; (sendmail 
+										프로그램의 경로)
+<br>
+										<img src="http://errdoc.gabia.net/images/blank.gif" width="30" height="1">$date 
+										= &quot;/bin/date&quot; (date 프로그램의 경로)
+
+										<br>
+										<br>
+										<font color="#333333">※ 절대경로는 반드시 ‘/’ 
+										로 시작해야 하며, 마지막에는 ‘/’를 붙이지 않아야 합니다.</font><br>
+								</td>
+							</tr>
+							<tr> 
+								<td height="30" colspan="2"> </td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><img src="http://errdoc.gabia.net/images/stitle_500_05.gif"></td>
+							</tr>
+							<tr> 
+								<td height="8" colspan="2"></td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><p style="margin-left:15;"><font color="#3366CC"><strong>[확인 
+										및 조치방법]</strong></font><br>
+										Perl에서 쓰는 특수문자들을 브라우져에서 일반 문자로 인식 시키려면 
+										반드시 문자<br>
+										앞에 백슬래쉬(Backslash,\)를 붙여줘야 합니다.<br>
+										전자우편주소를 쓸 때에는 <font color="#FF6600">abc@gabia.com</font>일 
+										경우 <font color="#FF6600"><strong>abc\@gabia.com</strong></font> 
+										으로 표기하고,<br>
+										Html태그를 쓸 때는 href=“<font color="#FF6600">http://gabia.com</font>”일 
+										경우 <strong><font color="#FF6600">href=\”http:// 
+										gabia.com\</font></strong>” 으로 <br>
+										표기해야 합니다.<br>
+								</td>
+							</tr>
+							<tr> 
+								<td height="30" colspan="2"> </td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><img src="http://errdoc.gabia.net/images/stitle_500_06.gif" width="550" height="18"></td>
+							</tr>
+							<tr> 
+								<td height="8" colspan="2"></td>
+							</tr>
+							<tr> 
+								<td>&nbsp;</td>
+								<td><p style="margin-left:15;"><font color="#3366CC"><strong>[확인 
+										및 조치방법]</strong></font><br>
+										asp 파일에 오류가 있는 경우, 웹브라우져 고급탭의 옵션 중 http 
+										오류메세지 옵션에 체크가 되어 있는지 <br>
+										확인하여 체크를 해제하시기 바랍니다. 이후 새 브라우져를 열어 다시 
+										해당 asp 파일을 보시면 보다 <br>
+										자세한 오류 메세지를 확인 하실 수 있습니다.<br>
+								</td>
+							</tr>
+							<tr> 
+								<td height="15" colspan="2"> </td>
+							</tr>
+						</table>
+
+                                            <table width="670" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                                <td height="160" valign="top" background="http://errdoc.gabia.net/images/search_box.jpg">
+                                                                        <table width="670" height="131" border="0" cellpadding="0" cellspacing="0">
+                                                                                <tr>
+                                                                                        <td valign="top" style="padding:20 20 0 25">
+<form action="http://www.google.co.kr/cse" id="cse-search-box" target="_blank">
+<input type="hidden" name="cx" value="partner-pub-9562210368372789:rgj6ev-tugo" />
+<input type="hidden" name="ie" value="utf-8" />
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+                <td height="25" colspan="3"><img src="http://errdoc.gabia.net/images/txt001.gif" width="114" height="19"></td>
+        </tr>
+        <tr>
+                <td width="200" height="35">
+                        <input type="text" name="q" size="30">
+                </td>
+                <td>
+                        <input type="image" src="http://errdoc.gabia.net/images/btn_search.gif" width="55" height="25" border="0">
+                </td>
+        </tr>
+        <tr>
+                <td height="30" colspan="4" valign="bottom"><img src="http://errdoc.gabia.net/images/txt002.gif" width="91" height="18"></td>
+        </tr>
+</table>
+</form>
+                                                                                        </td>
+                                                                                </tr>
+                                                                        </table>
+                                                                </td>
+                                                        </tr>
+                                                </table>
+                                        </td>
+                                </tr>
+                        </table>
+                </td>
+        </tr>
+</table>
+</body>
+</html>
+

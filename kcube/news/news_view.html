@@ -1,0 +1,334 @@
+<?
+include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
+include $server_root_path."/lib/class/class_ins_news.php";
+
+//-- 업로드 경로
+get_updir( "ins_news" );
+
+$pageName = "news";
+
+
+get_tb_ins_news_rq( "g" );
+if(eqyn($rq_inw["inw_idx"], 0)){
+	printmsgback("해당 정보를 찾을수 없습니다.");
+}else{
+	get_tb_ins_news_info_001( $rq_inw["inw_idx"] );
+
+	if(!eqyn($db_inw[result_cmd], "YESDATA") || !eqyn($db_inw['inw_status'], "Y")){
+		printmsgback("해당 정보를 찾을수 없습니다.");
+	}
+}
+
+/* 조회수 업데이트 */
+set_tb_ins_news_read_cnt_proc_001($rq_inw["inw_idx"]);
+
+
+
+$where = "";
+if(!eqyn($ser_fk_inw_mct_idx, "")){
+	$where = " and fk_inw_mct_idx=$ser_fk_inw_mct_idx";
+}
+/* 다음글 key 가져오기 */
+$next_inw_idx = 0;
+$sql = "select inw_idx from tb_ins_news where inw_status='Y' and inw_idx > $db_inw[inw_idx] $where order by inw_idx asc limit 0, 1";
+$rs = sql_fetch( $sql );
+if($rs){
+	$next_inw_idx = $rs[0];
+}
+
+
+/* 이전글 key 가져오기 */
+$pre_inw_idx = 0;
+$sql = "select inw_idx from tb_ins_news where inw_status='Y' and inw_idx < $db_inw[inw_idx] $where order by inw_idx desc limit 0, 1";
+$rs = sql_fetch( $sql );
+if($rs){
+	$pre_inw_idx = $rs[0];
+}
+
+$code_rs = get_tb_mgr_cate_list_001("NW", "*", "array" );
+
+//-- DB 닫기
+//set_db_close();
+
+
+//-- Location
+$MENU2_NAME = "NEWS";
+$MENU2_LINK = "/news/news_list.html";
+
+foreach($code_rs as $ors){
+	if(eqyn($ors[mct_idx],$db_inw[fk_inw_mct_idx])){
+		$MENU3_NAME = $ors[mct_name];
+	}
+}
+?>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>NEWS 상세 | K Cube Ventures</title>
+<? include "../inc/filelink.html"; ?>
+<script type="text/javascript">
+//<![CDATA[
+/* 변수 초기화 */
+//페이지 상태에 따른 헤더 배경 변경
+pageName = '<?= $pageName ?>';
+
+/* 페이징 초기 변수 */
+v_page = 1;
+v_list_size = 4;
+//v_list_size = 1;
+v_tmp_page = v_page;
+v_def_list_size = v_list_size;
+
+
+var v_ser_fk_inw_mct_idx = "<?= $ser_fk_inw_mct_idx ?>";
+function get_ins_news_cate_search(val){
+//	setHash( "&ser_fk_inw_mct_idx="+ val );
+	location.href="news_list.html?ser_fk_inw_mct_idx="+ val;
+}
+
+var v_more_yn  = false;
+function get_news_more(){
+	v_page++;
+	v_more_yn = true;
+	get_news_list();
+}
+
+function get_news_list(){
+	var v_param = "page="+ v_page +"&list_size="+ v_list_size +"&ser_fk_inw_mct_cate=NW&inw_idx=<?= $rq_inw["inw_idx"] ?>&fild=tag&search_title=<?= urlencode(print_content("js", $db_inw[inw_tag])) ?>";
+//	console.log(v_param)
+	var v_html = "";
+	$.ajax({
+		type:"get" ,
+		url:"/lib_ajax/get_ins_news.php",
+		data:v_param ,
+		success:function(data){
+			var json = JSON.parse(data);
+			var v_recordcount = json.recordcount;
+//			console.log(json)
+//			console.log(json.sql_list)
+//			console.log(json.result)
+			if(v_recordcount == 0 || json.result == null){
+				v_page--;
+				if(v_more_yn){
+					alert("검색된 데이타가 없습니다.");
+				}else{
+					$("#div_news").hide();
+					v_html += "<div class='item'>검색된 데이타가 없습니다.</div>";
+					$('#div_news_list').html( v_html );
+					v_more_yn = false;
+				}
+			}else{
+				var v_grid_sizer = "";
+				for(var i=0; i<json.result.length; i++){
+					db_inw_idx				= json.result[i].inw_idx;
+					db_inw_title			= json.result[i].inw_title;
+					db_fk_inw_mct_cate		= json.result[i].fk_inw_mct_cate;
+					db_fk_inw_mct_idx		= json.result[i].fk_inw_mct_idx;
+					db_inw_tag				= json.result[i].inw_tag;
+					db_inw_img_list			= json.result[i].inw_img_list;
+					db_inw_img_list_desc	= json.result[i].inw_img_list_desc;
+					db_inw_ins_datetime		= json.result[i].inw_ins_datetime;
+
+					v_link = "/news/news_view.html?inw_idx="+ db_inw_idx;
+					
+					v_html +='<div class="item">';
+					v_html +='	<a href="/news/news_view.html?inw_idx='+ db_inw_idx +'">';
+					v_html +='		<div class="c-img">';
+					v_html +='			<img src="<?= $GLB_UP_FILE_URL ?>'+ db_inw_img_list +'" alt="'+ db_inw_title +'" />';
+					v_html +='		</div>';
+					v_html +='		<div class="info">';
+					v_html +='			<span class="b-date">'+ get_eng_date(db_inw_ins_datetime) +'</span>';
+					v_html +='			<strong class="b-title">'+ db_inw_img_list_desc +'';
+					v_html +='			</strong>';
+					v_html +='		</div>';
+					v_html +='	</a>';
+					v_html +='	<div class="tags">';
+					v_html +='		<strong class="title">Tag</strong>';
+					v_html +='		'+ get_tag_search_make(db_inw_tag) ;
+					v_html +='	</div>';
+					v_html +='</div>';
+				}
+
+				$("#div_news_list").append( v_html );
+
+				var view_cnt = v_page * v_list_size;
+				if(view_cnt > v_recordcount){
+					view_cnt = v_recordcount;
+				}
+				$("#a_list_more").text("Learn More ("+ view_cnt +"/"+ v_recordcount +")");
+			}
+		},
+		error:function(){
+			v_page--;
+			alert( "처리도중 오류가 발생하였습니다." );
+		}
+	});
+}
+
+function inw_news_move( idx, cmd ){
+	if(idx == 0){
+		if(cmd == "next"){
+			alert("다음글이 없습니다.");		
+		}else{
+			alert("이전글이 없습니다.");
+		}
+		
+	}else{
+		location.href="news_view.html?inw_idx="+ idx +"&page=<?= $ipage ?>&ser_fk_inw_mct_cate=<?= $ser_fk_inw_mct_cate ?>&ser_fk_inw_mct_idx=<?= $ser_fk_inw_mct_idx ?>";
+	}
+}
+
+$(document).ready(function(){
+	var db_fk_inw_mct_idx = "<?= $db_inw[fk_inw_mct_idx] ?>";
+	$("#ser_fk_inw_mct_idx_mb").val(v_ser_fk_inw_mct_idx);
+	$("#ser_fk_inw_mct_idx_pc li").each(function( idx ){
+		if($(this).attr("idx") == db_fk_inw_mct_idx){
+			$(this).addClass("on");
+		}else{
+			$(this).removeClass("on");
+		}
+	});
+
+	get_news_list();
+});
+//]]>
+</script>
+</head>
+<body>
+<? include "../inc/skip-nav.html"; ?>
+
+<hr />
+
+<div id="wrap">
+	<header id="header">
+		<? include "../inc/head-spot.html"; ?>
+
+		<hr />
+
+		<!-- 일반 페이지 -->
+		<div class="page-title js-title">
+			<h3></h3>
+		</div>
+
+		<div class="lowmenu">
+<?
+if(count($code_rs) > 1){
+?>
+			<div class="sel-lowmenu">
+				<label for="ser_fk_inw_mct_idx_mb" class="sr-only">하위 메뉴</label>
+				<select class="selectpicker" id="ser_fk_inw_mct_idx_mb" onchange="get_ins_news_cate_search(this.value);">
+					<option value="">VIEW ALL</option>
+<?
+	foreach($code_rs as $ors){
+?>
+					<option value="<?= $ors[mct_idx] ?>"><?= $ors[mct_name] ?></option>
+<?
+	}
+?>
+				</select>
+			</div>
+			
+			<div class="txt-lowmenu">
+				<ul id="ser_fk_inw_mct_idx_pc">
+					<li idx=""><a href="javascript:get_ins_news_cate_search('');">VIEW ALL</a></li>
+<?
+	foreach($code_rs as $ors){
+?>
+					<li idx="<?= $ors[mct_idx] ?>"><a href="javascript:get_ins_news_cate_search('<?= $ors[mct_idx] ?>');"><?= $ors[mct_name] ?></a></li>
+<?
+	}
+?>
+				</ul>
+			</div>
+
+
+<?
+}else{
+?>
+			<!-- 메뉴 1개 -->
+			<span class="one-lowmenu">K CUBE NEWS</span>
+			<!-- //메뉴 1개 -->
+<?
+}
+?>
+		</div>
+	</header><!-- //header -->
+
+	<? include "../inc/totalmenu.html"; ?>
+
+	<hr />
+
+	<div id="container">
+		<? include "../inc/location.html"; ?>
+
+		<div id="contents">
+			<h4 class="cont-title">K CUBE NEWS</h4>
+			<div class="cont-margin">
+				<div class="view-page">
+					<div class="v-head">
+						<span class="date">
+							<script type="text/javascript">
+							<!--
+								document.write( get_eng_date("<?= $db_inw[inw_ins_datetime] ?>") );
+							//-->
+							</script>
+						</span>
+						<strong class="title" id="share_title_<?= $db_inw[inw_idx] ?>"><?= $db_inw[inw_title] ?></strong>
+						<div class="sns">
+							<a href="javascript:set_facebook_share('<?= "$GLB_OG_URL/share/news/$db_inw[inw_idx]" ?>');" class="ico-fb"><i class="fa fa-facebook-square"></i></a>
+							<a href="javascript:set_twitter_share('<?= "$GLB_OG_URL/share/news/$db_inw[inw_idx]" ?>', 'share_title_<?= $db_inw[inw_idx] ?>' );" class="ico-twt"><i class="fa fa-twitter-square"></i></a>
+						</div>
+					</div>
+					<div class="v-body">
+						<div class="editor-area">
+							<!-- 에디터 입력 시작 -->
+							<?= $db_inw[inw_content] ?>
+							<!-- 에디터 입력 끝 -->
+						</div>
+						
+						<div class="tags">
+							<strong class="title">Tag</strong>
+							<script type="text/javascript">
+							<!--
+								document.write( get_tag_search_make("<?= print_content("js", $db_inw[inw_tag]) ?>") );
+							//-->
+							</script>
+						</div>
+					</div>
+				</div>
+				<div class="view-btns">
+					<a href="javascript:inw_news_move('<?= $next_inw_idx ?>', 'next');" class="btn-prev"><img src="../images/common/arr_blue_lft.png" alt="" /></a>
+					<a href="news_list.html?page=<?= $ipage ?>&ser_fk_inw_mct_idx=<?= $ser_fk_inw_mct_idx ?>" class="btn-go-list">List</a>
+					<a href="javascript:inw_news_move('<?= $pre_inw_idx ?>', 'pre');" class="btn-next"><img src="../images/common/arr_blue_rgt.png" alt="" /></a>
+				</div>
+
+				<!-- 댓글 콘텐츠 시작 -->
+				<div class="fb-comments" data-href="http://<?= $GLB_DOAMIN ?>/share/news/<?= $rq_inw[inw_idx] ?>" data-width="100%" data-numposts="5"></div>
+				<!-- 댓글 콘텐츠 끝-->
+
+				<div class="view-related" id="div_news">
+					<strong class="title">RELATED NEWS</strong>
+					<div class="re-news-grid" id="div_news_list">
+						<!-- News 리스트 컨텐츠 //-->
+					</div>
+
+					<div class="btn-area">
+						<a href="javascript:get_news_more();" class="btn-blue-fixed" id="a_list_more">Learn More (0/0)</a>
+					</div>
+				</div>
+			</div>
+
+			<hr />
+
+			<? include "../inc/btn-go-top.html"; ?>
+		</div><!-- //contents -->
+	</div><!-- //container -->
+
+	<hr />
+	<? include "../inc/footer.html"; ?>
+</div>
+</body>
+</html>
