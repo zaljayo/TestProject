@@ -14,7 +14,7 @@ $arr_db_proc_status = array();
 
 function set_dbcon( $transtart = false ){
 	global $dbcon;
-	$db_host = "localhost";
+	$db_host = "us-cdbr-azure-southcentral-e.cloudapp.net";
 	$db_id = "bacbe50c3b9d62";
 	$db_pwd = "fb668bb3";
 	$db_name = "dbjimmyrim";
