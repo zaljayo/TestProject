@@ -1,4 +1,6 @@
-<? include $_SERVER["DOCUMENT_ROOT"]."/admin_mgr/inc/inc_top_mgr.php" ?>
+<?
+error_reporting(E_ALL ^ E_NOTICE);
+include $_SERVER["DOCUMENT_ROOT"]."/admin_mgr/inc/inc_top_mgr.php" ?>
 <?
 //-- DB 연결
 set_dbcon();
