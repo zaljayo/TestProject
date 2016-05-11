@@ -18,7 +18,7 @@ function set_dbcon( $transtart = false ){
 	$db_id = "bacbe50c3b9d62";
 	$db_pwd = "fb668bb3";
 	$db_name = "dbjimmyrim";
-	$dbcon = mysqli_connect($db_host, $db_id, $db_pwd, $db_name)  or die("Could not connect");
+	$dbcon = mysql_connect($db_host, $db_id, $db_pwd)  or die("Could not connect");
 //	mysql_query("SET NAMES 'euckr'");
 	$select_db = mysql_select_db($db_name); 
 
