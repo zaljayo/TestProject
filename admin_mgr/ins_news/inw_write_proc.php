@@ -1,4 +1,5 @@
 <?
+error_reporting(E_ALL ^ E_NOTICE);
 include $_SERVER["DOCUMENT_ROOT"]."/admin_mgr/inc/inc_top_mgr.php";
 include $server_root_path."/lib/f_file.php";
 include $server_root_path."/lib/class/class_ins_news.php";
