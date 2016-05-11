@@ -1,4 +1,5 @@
 <?
+ob_start();
 include $_SERVER["DOCUMENT_ROOT"]."/lib/common.php";
 include $server_root_path."/lib/class/class_mgr_main.php";
 
